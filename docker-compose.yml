@@ -1,0 +1,60 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: ruralconnect_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=ruralconnect
+    networks:
+      - ruralconnect_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ruralconnect_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - MONGO_DB_NAME=ruralconnect
+      - JWT_SECRET=ruralconnect_super_secret_jwt_key_2026
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+    networks:
+      - ruralconnect_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ruralconnect_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - ruralconnect_net
+
+networks:
+  ruralconnect_net:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
