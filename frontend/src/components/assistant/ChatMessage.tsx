@@ -1,6 +1,7 @@
-import React from 'react';
-import { Bot, User, Sparkles, ShieldCheck, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bot, User, Sparkles, ShieldCheck, Volume2, Square } from 'lucide-react';
 import { ChatMessage as ChatMessageType } from '../../types';
+import { useTranslation } from 'react-i18next';
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -11,7 +12,45 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   message,
   onSelectSuggestion,
 }) => {
+  const { i18n } = useTranslation();
   const isAssistant = message.role === 'assistant';
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const cleanTextForSpeech = (text: string): string => {
+    return text
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      .replace(/https?:\/\/\S+/g, '')
+      .replace(/[*_#`~>•]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
+  const handleToggleSpeak = () => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const cleaned = cleanTextForSpeech(message.content);
+    const utterance = new SpeechSynthesisUtterance(cleaned);
+
+    let targetLang = 'en-IN';
+    if (i18n.language === 'hi') targetLang = 'hi-IN';
+    else if (i18n.language === 'mr') targetLang = 'mr-IN';
+
+    utterance.lang = targetLang;
+    utterance.rate = 0.95;
+
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
 
   return (
     <div
@@ -32,9 +71,29 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
             : 'bg-brand-700 text-white font-medium'
         }`}
       >
-        <p className="text-sm sm:text-base leading-relaxed whitespace-pre-line">
-          {message.content}
-        </p>
+        <div className="flex items-start justify-between gap-3">
+          <div className="text-sm sm:text-base leading-relaxed whitespace-pre-line flex-1">
+            {message.content}
+          </div>
+          {isAssistant && (
+            <button
+              onClick={handleToggleSpeak}
+              className={`p-1.5 rounded-lg border text-xs shrink-0 transition-colors ${
+                isSpeaking
+                  ? 'bg-red-50 border-red-200 text-red-600 animate-pulse'
+                  : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900'
+              }`}
+              title={isSpeaking ? 'Stop voice reading' : 'Listen to this response'}
+              aria-label="Text to speech"
+            >
+              {isSpeaking ? (
+                <Square className="w-4 h-4 fill-current" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
+            </button>
+          )}
+        </div>
 
         {/* Verified Sources if provided */}
         {isAssistant && message.sources && message.sources.length > 0 && (

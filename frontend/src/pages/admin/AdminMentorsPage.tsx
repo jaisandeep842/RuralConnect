@@ -15,7 +15,7 @@ export const AdminMentorsPage: React.FC = () => {
 
   const [formData, setFormData] = useState({
     name: '',
-    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    photo: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&auto=format&fit=crop&q=80',
     expertise: 'Agro-Processing & Dairy',
     experience: '10+ years',
     qualification: 'M.Sc. Agriculture',
@@ -47,7 +47,7 @@ export const AdminMentorsPage: React.FC = () => {
     setEditingMentorId(null);
     setFormData({
       name: '',
-      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+      photo: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&auto=format&fit=crop&q=80',
       expertise: 'Agro-Processing & Dairy',
       experience: '10+ years',
       qualification: 'M.Sc. Agriculture',

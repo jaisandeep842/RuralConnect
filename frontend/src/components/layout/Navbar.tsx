@@ -101,7 +101,7 @@ export const Navbar: React.FC = () => {
                     className="flex items-center gap-2.5 p-1.5 pr-3 rounded-full hover:bg-slate-100 border border-slate-200 transition-colors"
                   >
                     <img
-                      src={user.profile_photo || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80'}
+                      src={user.profile_photo || 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=100&auto=format&fit=crop&q=80'}
                       alt={user.full_name}
                       className="w-8 h-8 rounded-full object-cover border border-brand-400"
                     />
@@ -230,7 +230,7 @@ export const Navbar: React.FC = () => {
             <div className="pt-2 space-y-1">
               <div className="px-4 py-2 flex items-center gap-3">
                 <img
-                  src={user.profile_photo || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80'}
+                  src={user.profile_photo || 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=100&auto=format&fit=crop&q=80'}
                   alt={user.full_name}
                   className="w-10 h-10 rounded-full object-cover border border-brand-400"
                 />

@@ -215,8 +215,10 @@ class ChatQuery(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
+    answer: Optional[str] = None
     language: str
-    sources: List[str] = []
+    retrieved: bool = True
+    sources: List[Any] = []
     suggested_questions: List[str] = []
 
 # --- Community ---

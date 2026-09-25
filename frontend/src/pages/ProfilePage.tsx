@@ -90,7 +90,7 @@ export const ProfilePage: React.FC = () => {
         {/* Profile Card Header */}
         <div className="flex items-center gap-4 pb-6 border-b border-slate-100">
           <img
-            src={user?.profile_photo || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80'}
+            src={user?.profile_photo || 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80'}
             alt={user?.full_name}
             className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-brand-600 shadow-md"
           />

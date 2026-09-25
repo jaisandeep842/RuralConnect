@@ -5,6 +5,7 @@ import {
   FALLBACK_TRAININGS,
   FALLBACK_SCHEMES,
   FALLBACK_POSTS,
+  FALLBACK_MENTORS,
   getFallbackChatResponse,
 } from './fallbackData';
 
@@ -105,6 +106,55 @@ function handleOfflineFallback<T>(endpoint: string, options: RequestInit = {}): 
     if (scheme) return scheme as unknown as T;
   }
 
+  // 3.5 Mentors
+  if (path === '/api/mentors' && method === 'GET') {
+    const expertise = params.get('expertise');
+    const language = params.get('language');
+    let results = [...FALLBACK_MENTORS];
+    if (expertise && expertise !== 'All') {
+      results = results.filter((m) => m.expertise.toLowerCase().includes(expertise.toLowerCase()));
+    }
+    if (language && language !== 'All') {
+      results = results.filter((m) => m.languages.some((l) => l.toLowerCase() === language.toLowerCase()));
+    }
+    return results as unknown as T;
+  }
+  const mentorMatch = path.match(/^\/api\/mentors\/([^/]+)$/);
+  if (mentorMatch && method === 'GET') {
+    const mentor = FALLBACK_MENTORS.find((m) => m.id === mentorMatch[1]);
+    if (mentor) return mentor as unknown as T;
+  }
+  if (path === '/api/mentors/book' && method === 'POST') {
+    try {
+      const body = JSON.parse((options.body as string) || '{}');
+      const mentor = FALLBACK_MENTORS.find((m) => m.id === body.mentor_id) || FALLBACK_MENTORS[0];
+      const newBooking = {
+        id: 'booking-' + Date.now(),
+        mentor_id: mentor.id,
+        mentor_name: mentor.name,
+        date: body.date || '2026-03-25',
+        time_slot: body.time_slot || '04:00 PM - 05:00 PM',
+        notes: body.notes || '',
+        status: 'confirmed',
+        created_at: new Date().toISOString(),
+      };
+      const existing = JSON.parse(localStorage.getItem('ruralconnect_local_bookings') || '[]');
+      existing.unshift(newBooking);
+      localStorage.setItem('ruralconnect_local_bookings', JSON.stringify(existing));
+      return newBooking as unknown as T;
+    } catch {
+      return { status: 'confirmed' } as unknown as T;
+    }
+  }
+  if (path === '/api/mentors/my-appointments' && method === 'GET') {
+    try {
+      const existing = JSON.parse(localStorage.getItem('ruralconnect_local_bookings') || '[]');
+      return existing as unknown as T;
+    } catch {
+      return [] as unknown as T;
+    }
+  }
+
   // 4. Community
   if (path === '/api/community/posts' && method === 'GET') {
     return getLocalCommunityPosts() as unknown as T;
@@ -118,7 +168,7 @@ function handleOfflineFallback<T>(endpoint: string, options: RequestInit = {}): 
         user_id: 'user-current',
         user_name: 'You (Rural Founder)',
         user_business: 'Rural Business • Maharashtra',
-        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+        avatar: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80',
         content: body.content || '',
         image_url: body.image_url || null,
         category: body.category || 'Discussion',

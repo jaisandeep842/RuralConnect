@@ -32,7 +32,7 @@ export const FALLBACK_COURSES: Course[] = [
     title: 'Rural & Women Entrepreneurship Basics',
     description: 'Step-by-step practical guide on Self-Help Groups (SHG), micro-enterprise bookkeeping, branding, hygiene standards, and government loans.',
     category: 'Rural & Women Entrepreneurship',
-    thumbnail: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1609137144813-7d9921338f24?w=600&auto=format&fit=crop&q=80',
     level: 'Beginner',
     language: 'Marathi / Hindi',
     total_duration_minutes: 110,
@@ -425,13 +425,151 @@ export const FALLBACK_SCHEMES: Scheme[] = [
   },
 ];
 
+export const FALLBACK_MENTORS: Mentor[] = [
+  {
+    id: 'mentor-01',
+    name: 'Dr. Ramesh Kulkarni',
+    photo: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Agro-Processing & Dairy Farming',
+    experience: '18+ years',
+    qualification: 'Ph.D. in Agriculture Economics (MPKV Rahuri)',
+    languages: ['Marathi', 'Hindi', 'English'],
+    location: 'Pune, Maharashtra',
+    availability: 'Mon, Wed, Fri (4 PM - 7 PM)',
+    rating: 4.9,
+    sessions: 142,
+    bio: 'Specializes in helping farmer producer companies (FPC) and rural dairy farmers set up cold storage, milk chilling plants, and organic certification.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-02',
+    name: 'Sunita Patil',
+    photo: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Self-Help Groups & Micro-Finance',
+    experience: '14+ years',
+    qualification: 'M.S.W., Rural Livelihoods Consultant',
+    languages: ['Marathi', 'Hindi'],
+    location: 'Kolhapur, Maharashtra',
+    availability: 'Tue, Thu, Sat (10 AM - 1 PM)',
+    rating: 5.0,
+    sessions: 218,
+    bio: 'Trained over 400 women-led self-help groups across western Maharashtra in micro-savings, bank credit linkage, and conflict resolution.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-03',
+    name: 'Vikram Shinde',
+    photo: 'https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Handicrafts, Textiles & Retail Branding',
+    experience: '12+ years',
+    qualification: 'National Institute of Design (NID) Alum',
+    languages: ['Hindi', 'Marathi', 'English'],
+    location: 'Nashik, Maharashtra',
+    availability: 'Mon to Fri (5 PM - 8 PM)',
+    rating: 4.8,
+    sessions: 98,
+    bio: 'Helps Paithani weavers, bamboo artisans, and pottery collectives modernise design aesthetics, packaging, and showcase in national craft exhibitions.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-04',
+    name: 'Ananya Deshmukh',
+    photo: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Digital Marketing & WhatsApp Commerce',
+    experience: '9+ years',
+    qualification: 'MBA Marketing (Symbiosis Pune)',
+    languages: ['Marathi', 'Hindi', 'English'],
+    location: 'Aurangabad (Chhatrapati Sambhajinagar)',
+    availability: 'Wed, Sat, Sun (2 PM - 6 PM)',
+    rating: 4.9,
+    sessions: 165,
+    bio: 'Digital growth strategist dedicated to onboarding rural tier-3 and village entrepreneurs onto social media storefronts and hyperlocal delivery apps.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-05',
+    name: 'Priya Gaikwad',
+    photo: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Government Schemes & Bank Loans',
+    experience: '15+ years',
+    qualification: 'Former Lead Bank Manager (Bank of Maharashtra)',
+    languages: ['Marathi', 'Hindi', 'English'],
+    location: 'Satara, Maharashtra',
+    availability: 'Mon, Thu, Sat (3 PM - 6 PM)',
+    rating: 5.0,
+    sessions: 310,
+    bio: 'Expert in PMEGP and Mudra loan documentation, project report preparation, and bank interview guidance for rural women entrepreneurs.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-06',
+    name: 'Suresh Jadhav',
+    photo: 'https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Organic Farming & Solar Schemes',
+    experience: '16+ years',
+    qualification: 'M.Sc. Horticulture & Certified Organic Auditor',
+    languages: ['Marathi', 'Hindi'],
+    location: 'Sangli, Maharashtra',
+    availability: 'Mon, Wed, Sat (9 AM - 12 PM)',
+    rating: 4.9,
+    sessions: 184,
+    bio: 'Pioneer in organic vermicompost, greenhouse drip irrigation, and availing PM-KUSUM 90% solar pump government subsidies for farmers.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-07',
+    name: 'Dr. Meera Joshi',
+    photo: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Millet Processing & FSSAI Licensing',
+    experience: '11+ years',
+    qualification: 'Food Technologist (CFTRI Mysore)',
+    languages: ['Marathi', 'Hindi', 'English'],
+    location: 'Nagpur, Maharashtra',
+    availability: 'Tue, Thu, Fri (3 PM - 6 PM)',
+    rating: 4.9,
+    sessions: 126,
+    bio: 'Consultant for Shree Anna millets value addition, bakery items, shelf-life testing, and obtaining FoSCoS state & basic FSSAI licenses.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-08',
+    name: 'Dr. Arjun Rathod',
+    photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Poultry & Goat Rearing Micro-Enterprises',
+    experience: '13+ years',
+    qualification: 'B.V.Sc & A.H. (Veterinary Consultant)',
+    languages: ['Marathi', 'Hindi', 'English'],
+    location: 'Amravati, Maharashtra',
+    availability: 'Mon to Fri (11 AM - 2 PM)',
+    rating: 4.8,
+    sessions: 152,
+    bio: 'Advises farmers on disease-resistant Kadaknath / Desi poultry breeds, Osmanabadi stall-fed goat rearing sheds, and vaccination management.',
+    is_verified: true,
+  },
+  {
+    id: 'mentor-09',
+    name: 'Kavita Choudhary',
+    photo: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&auto=format&fit=crop&q=80',
+    expertise: 'Rural Women SHG Federation & Lakhpati Didi',
+    experience: '17+ years',
+    qualification: 'NRLM Master Trainer & Social Entrepreneur',
+    languages: ['Marathi', 'Hindi'],
+    location: 'Solapur, Maharashtra',
+    availability: 'Tue, Wed, Sat (1 PM - 4 PM)',
+    rating: 5.0,
+    sessions: 275,
+    bio: 'National mentor for women federation empowerment, community revolving funds, and Lakhpati Didi business model implementation in rural areas.',
+    is_verified: true,
+  },
+];
+
 export const FALLBACK_POSTS: CommunityPost[] = [
   {
     id: 'post-01',
     user_id: 'user-demo-01',
     user_name: 'Sunita Kamble',
     user_business: 'Organic Food Processing • Satara',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    avatar: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80',
     content: '🎉 आमच्या महिला बचत गटाने या महिन्यात ५० किलो सेंद्रिय हळद पावडर आणि आवळा कॅण्डी तयार केली आहे! व्हॉट्सअॅप बिझनेसवरून आम्हाला पुण्यामधून १५ नवीन ऑर्डर्स मिळाल्या. धन्यवाद रुरल कनेक्ट!',
     image_url: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&auto=format&fit=crop&q=80',
     category: 'Success Story',
@@ -455,7 +593,7 @@ export const FALLBACK_POSTS: CommunityPost[] = [
     user_id: 'user-demo-02',
     user_name: 'Rekha Patil',
     user_business: 'Handmade Bamboo Crafts • Kolhapur',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    avatar: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=150&auto=format&fit=crop&q=80',
     content: 'PMEGP योजनेतून ३५% सबसिडीवर बांबू प्रक्रिया मशीनसाठी अर्ज केला होता. बँकेकडून नुकतेच कर्ज मंजूर झाले आहे! कागदपत्रांबद्दल कोणाला काही मदत हवी असल्यास नक्की विचारा.',
     image_url: null,
     category: 'Discussion',
@@ -470,7 +608,7 @@ export const FALLBACK_POSTS: CommunityPost[] = [
     user_id: 'user-demo-03',
     user_name: 'Pooja Gaikwad',
     user_business: 'Herbal Soaps & Cosmetics • Pune',
-    avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&auto=format&fit=crop&q=80',
+    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80',
     content: 'नवीन लेबलिंग आणि इको-फ्रेंडली पॅकेजिंग डिझाइन केले आहे. ग्राहकांना प्लास्टिक-मुक्त पॅकिंग खूप आवडत आहे. फोटो पाहून आपले मत नक्की कळवा!',
     image_url: 'https://images.unsplash.com/photo-1608248597359-2917e889099e?w=800&auto=format&fit=crop&q=80',
     category: 'Product Showcase',
@@ -483,58 +621,152 @@ export const FALLBACK_POSTS: CommunityPost[] = [
 ];
 
 export function getFallbackChatResponse(query: string, language: string = 'en'): { reply: string; sources: string[]; suggested_questions: string[] } {
-  const q = query.toLowerCase();
+  const q = query.toLowerCase().trim();
 
-  const isFood = q.includes('food') || q.includes('खाद्य') || q.includes('लोणचे') || q.includes('पापड') || q.includes('मसाले') || q.includes('pickle') || q.includes('fssai');
-  const isMarketing = q.includes('whatsapp') || q.includes('marketing') || q.includes('व्हॉट्सअॅप') || q.includes('विक्री') || q.includes('मार्केटिंग') || q.includes('ग्राहक');
-  const isPmegp = q.includes('pmegp') || q.includes('subsidy') || q.includes('सबसिडी') || q.includes('अनुदान');
-  const isMudra = q.includes('mudra') || q.includes('मुद्रा') || q.includes('कर्ज') || q.includes('loan');
-  const isShg = q.includes('shg') || q.includes('बचत') || q.includes('bachat');
+  const isWhatsApp = q.includes('whatsapp') || q.includes('व्हॉट्सअॅप') || q.includes('व्हॉट्सॅप') || q.includes('व्हाट्सएप') || q.includes('catalog') || q.includes('कैटलॉग') || q.includes('कॅटलॉग') || q.includes('broadcast');
+  const isFood = q.includes('food') || q.includes('खाद्य') || q.includes('लोणचे') || q.includes('पापड') || q.includes('मसाले') || q.includes('pickle') || q.includes('fssai') || q.includes('बेकरी') || q.includes('तेल');
+  const isPoultry = q.includes('poultry') || q.includes('chicken') || q.includes('kadaknath') || q.includes('egg') || q.includes('कुक्कुटपालन') || q.includes('कोंबडी') || q.includes('कडकनाथ') || q.includes('मुर्गी');
+  const isDairy = q.includes('dairy') || q.includes('milk') || q.includes('cow') || q.includes('buffalo') || q.includes('ghee') || q.includes('paneer') || q.includes('दुग्ध') || q.includes('गाय') || q.includes('म्हैस') || q.includes('दूध') || q.includes('पनीर') || q.includes('डेअरी');
+  const isGoat = q.includes('goat') || q.includes('sheep') || q.includes('शेळी') || q.includes('बकरी') || q.includes('बोकड') || q.includes('मेंढी');
+  const isPmegp = q.includes('pmegp') || q.includes('subsidy') || q.includes('सबसिडी') || q.includes('अनुदान') || q.includes('खादी');
+  const isMudra = q.includes('mudra') || q.includes('मुद्रा') || q.includes('loan') || q.includes('कर्ज') || q.includes('ऋण');
+  const isShg = q.includes('shg') || q.includes('बचत') || q.includes('bachat') || q.includes('lakhpati') || q.includes('लखपती');
+  const isHandicraft = q.includes('handicraft') || q.includes('weaving') || q.includes('saree') || q.includes('tailor') || q.includes('हस्तकला') || q.includes('शिलाई') || q.includes('हातमाग') || q.includes('पैठणी');
 
   let reply = '';
   let sources: string[] = ['RuralConnect Verified Knowledge Base'];
 
-  if (isFood) {
-    sources.push('Ministry of Food Processing Industries (MoFPI)', 'FSSAI FoSCoS Portal');
-    if (language === 'mr') {
-      reply = `**ग्रामीण भागात घरून अन्नप्रक्रिया व्यवसाय कसा सुरू करावा:**\n\n1. **Udyam नोंदणी:** [udyamregistration.gov.in](https://udyamregistration.gov.in) वर मोफत MSME प्रमाणपत्र मिळवा.\n2. **FSSAI परवाना:** ₹१२ लाखांखालील उलाढालीसाठी FoSCoS पोर्टलवर फक्त ₹१००/वर्ष दरात बेसिक फूड लायसन्स मिळते.\n3. **स्वच्छ पॅकेजिंग:** हवाबंद पाकिटांवर उत्पादन तारीख, एक्स्पायरी, वजन व घटकांची माहिती द्या.\n4. **PMFME योजना:** खाद्यप्रक्रिया युनिटसाठी ३५% क्रेडिट सबसिडी (कमाल ₹१० लाख) मिळते.`;
-    } else if (language === 'hi') {
-      reply = `**ग्रामीण क्षेत्र में घर से खाद्य प्रसंस्करण व्यापार शुरू करने के उपाय:**\n\n1. **उद्यम रजिस्ट्रेशन:** udyamregistration.gov.in पर मुफ्त MSME पंजीकरण करें।\n2. **FSSAI लाइसेंस:** ₹12 लाख से कम टर्नओवर के लिए FoSCoS पोर्टल पर ₹100/वर्ष में बेसिक रजिस्ट्रेशन लें।\n3. **एयरटाइट पैकेजिंग:** निर्माण तिथि और सामग्री का स्पष्ट विवरण दें।\n4. **PMFME योजना:** 35% क्रेडिट सब्सिडी (अधिकतम ₹10 लाख) का लाभ उठाएं।`;
-    } else {
-      reply = `**Steps to Start a Home Food Processing Unit in Rural India:**\n\n1. **Udyam Registration:** Register your micro-business for free on [udyamregistration.gov.in](https://udyamregistration.gov.in).\n2. **FSSAI License:** For turnover under ₹12 Lakhs/year, get a Basic FSSAI registration on the FoSCoS portal (₹100/year).\n3. **Quality Packaging:** Use food-grade pouches with labels indicating ingredients, net weight, and best-before date.\n4. **PMFME Scheme:** Avail 35% capital subsidy (up to ₹10 Lakhs) under the Pradhan Mantri Formalisation of Micro food processing Enterprises scheme.`;
-    }
-  } else if (isMarketing) {
+  if (isWhatsApp) {
     sources.push('RuralConnect Digital Commerce Academy', 'WhatsApp Business Guidelines');
     if (language === 'mr') {
-      reply = `**व्हॉट्सअॅप व सोशल मीडिया मार्केटिंगद्वारे ग्राहक कसे मिळवावेत:**\n\n1. **WhatsApp Business अ‍ॅप:** उत्पादनांचे फोटो, किंमत आणि वर्णनासह कॅटलॉग (Catalog) तयार करा.\n2. **मोबाईल फोटोग्राफी:** सूर्यप्रकाशात उत्पादनांचे स्वच्छ फोटो काढा.\n3. **डिजिटल पेमेंट (UPI):** PhonePe किंवा Google Pay चा QR कोड तयार ठेवा.\n4. **स्थानिक ग्रुप्स:** गाव व तालुक्यातील व्हॉट्सअॅप ग्रुप्सवर नवीन उत्पादनांची माहिती शेअर करा.`;
+      reply = `**ग्रामीण व नवउद्योजकांसाठी WhatsApp Business द्वारे विक्री वाढवण्याचे परिपूर्ण मार्गदर्शन:**\n\n` +
+        `1. **WhatsApp Business अ‍ॅप सेट करणे:** गुगल प्ले स्टोअरवरून मोफत WhatsApp Business डाऊनलोड करा. आपल्या व्यवसायाचे नाव, लोगो, श्रेणी (उदा. Grocery / Food / Handicrafts), कामाची वेळ आणि दुकानाचा पत्ता भरा.\n` +
+        `2. **उत्पादनांचा डिजिटल कॅटलॉग (Catalog):** कॅटलॉग विभागात जाऊन प्रत्येक उत्पादनाचे सूर्यप्रकाशात काढलेले २-३ स्वच्छ फोटो, अचूक नाव, वजन (उदा. ५०० ग्रॅम / १ किलो) आणि स्पष्ट किंमत (₹) जोडा. ग्राहकांना थेट कॅटलॉग लिंक पाठवता येते.\n` +
+        `3. **त्वरित उत्तरे (Quick Replies):** वारंवार विचारल्या जाणाऱ्या प्रश्नांसाठी शॉर्टकट तयार करा (उदा. \`/price\` दाबताच संपूर्ण दरपत्रक, \`/account\` दाबताच बँक तपशील व UPI पाठवले जाईल).\n` +
+        `4. **स्वयंचलित संदेश (Automated Greeting & Away Messages):** नवीन ग्राहकाने पहिला मेसेज करताच 'स्वागत संदेश' त्वरित पाठवा आणि कामाच्या वेळेबाहेर 'अवे मेसेज' चालू ठेवा.\n` +
+        `5. **ग्राहकांचे वर्गीकरण (Labels):** ग्राहकांना रंगीबेरंगी लेबल्स लावा: 'नवीन ग्राहक', 'ऑर्डर बाकी', 'पैसे आले', 'माल पाठवला' - यामुळे कोणाकडून पैसे बाकी आहेत हे एका नजरेत कळते.\n` +
+        `6. **ब्रॉडकास्ट यादी (Broadcast Lists):** ज्यांनी आपला नंबर सेव्ह केला आहे अशा ग्राहकांची २०-५० जणांची यादी करा. दर आठवड्याला नवीन ताजी उत्पादने किंवा सणांची विशेष ऑफर पाठवा (स्पॅमिंग टाळा).\n` +
+        `7. **UPI पेमेंट व स्टेटस स्टोरीज (Status Updates):** दररोज सकाळी उत्पादने पॅक करतानाचे किंवा तयार करतानाचे १५ सेकंदांचे व्हिडिओ स्टेटसवर ठेवा आणि खाली Google Pay/PhonePe QR कोड द्या जेणेकरून ग्राहक आगाऊ रक्कम भरून बुकिंग करतील.`;
     } else if (language === 'hi') {
-      reply = `**व्हाट्सएप और डिजिटल मार्केटिंग से बिक्री कैसे बढ़ाएं:**\n\n1. **WhatsApp Business:** उत्पाद फोटो और मूल्य के साथ अपना कैटलॉग तैयार करें।\n2. **नेचुरल लाइट फोटोग्राफी:** दिन की रोशनी में साफ फोटो खींचें।\n3. **UPI पेमेंट:** तुरंत भुगतान हेतु PhonePe/Google Pay QR कोड रखें।\n4. **सोशल वीडियो:** 15 सेकंड के छोटे वीडियो बनाकर साझा करें।`;
+      reply = `**ग्रामीण व छोटे उद्यमियों के लिए WhatsApp Business से बिक्री बढ़ाने की संपूर्ण गाइड:**\n\n` +
+        `1. **WhatsApp Business प्रोफाइल:** प्ले स्टोर से फ्री बिजनेस ऐप डाउनलोड करें। अपना व्यावसायिक नाम, प्रोफाइल फोटो, व्यवसाय विवरण, कार्य समय और पता सेट करें।\n` +
+        `2. **डिजिटल प्रोडक्ट कैटलॉग (Catalog):** अपने उत्पादों की अच्छी रोशनी में खींची गई फोटो, सही नाम, वजन (उदा. 500g/1kg) और तय कीमत (₹) के साथ कैटलॉग जोड़ें। ग्राहक एक क्लिक पर उत्पाद चुन सकते हैं।\n` +
+        `3. **त्वरित उत्तर (Quick Replies):** बार-बार पूछे जाने वाले उत्तरों के लिए शॉर्टकट बनाएं (जैसे \`/rate\` टाइप करने पर रेट लिस्ट या \`/pay\` पर पेमेंट जानकारी तुरंत चली जाए)।\n` +
+        `4. **ऑटोमेटेड मैसेजिंग (Greeting & Away):** नए ग्राहकों के लिए तुरंत स्वागत संदेश सेट करें और दुकान बंद होने पर ऑटो-रिप्लाई चालू रखें।\n` +
+        `5. **कस्टमर लेबल्स (Labels):** ग्राहकों को लेबल्स से व्यवस्थित करें: 'नया ग्राहक', 'भुगतान लंबित', 'ऑर्डर तैयार', 'पार्सल रवाना'। इससे हिसाब में कभी गलती नहीं होती।\n` +
+        `6. **ब्रॉडकास्ट लिस्ट (Broadcast):** नियमित ग्राहकों की ब्रॉडकास्ट लिस्ट बनाएं और हफ्ते में एक बार ताज़ा माल या छूट की जानकारी भेजें।\n` +
+        `7. **UPI पेमेंट और स्टेटस मार्केटिंग:** PhonePe / Google Pay QR कोड से एडवांस पेमेंट लें। रोज़ाना काम के छोटे-छोटे वीडियो (Shorts) व्हाट्सएप स्टेटस पर शेयर करें।`;
     } else {
-      reply = `**Boost Your Rural Business with Digital & WhatsApp Marketing:**\n\n1. **WhatsApp Business:** Set up a free business profile with a photo catalog and clear pricing.\n2. **Crisp Mobile Photos:** Shoot authentic pictures in natural daylight showing hygiene and craft quality.\n3. **UPI Payments:** Provide quick QR codes (Google Pay, PhonePe, Paytm) for easy advance orders.\n4. **Short Videos:** Share short 15-second craft clips to connect with town and city customers.`;
+      reply = `**Mastering WhatsApp Business for Rural & Micro-Enterprises:**\n\n` +
+        `1. **Setup Professional Business Profile:** Install WhatsApp Business (free). Add your official venture name, clear brand logo, business category, business hours, and location address.\n` +
+        `2. **Build a Crisp Product Catalog:** In Catalog Manager, upload high-resolution daylight photos, product title, unit weights (e.g., 250g, 1kg), clear descriptions, and fixed prices in ₹. Customers can browse and add items to a cart.\n` +
+        `3. **Configure Quick Replies:** Save canned shortcuts for repetitive inquiries (e.g., \`/pricing\` sends price list, \`/pay\` sends UPI details, \`/shipping\` gives delivery timelines).\n` +
+        `4. **Automated Greeting & Away Messages:** Instantly welcome first-time contacts with a warm greeting and set automated out-of-office responses during non-working hours.\n` +
+        `5. **Organize Contacts with Color-Coded Labels:** Tag chats with labels like 'New Inquiry', 'Payment Pending', 'Order Confirmed', 'Dispatched', and 'Repeat Customer' for spotless order tracking.\n` +
+        `6. **Targeted Broadcast Lists:** Send weekly fresh arrivals or seasonal festive offers to customers who have saved your number (avoid spam to protect your account).\n` +
+        `7. **UPI Digital Payments & Status Stories:** Share PhonePe/Google Pay/Paytm QR codes for instant prepayment. Post 15-second behind-the-scenes preparation clips to WhatsApp Status daily to build customer trust.`;
+    }
+  } else if (isPoultry) {
+    sources.push('National Livestock Mission (NLM)', 'NABARD Backyard Poultry Guidelines');
+    if (language === 'mr') {
+      reply = `**ग्रामीण भागात परसातील कुक्कुटपालन (Poultry / Kadaknath) नियोजन:**\n\n` +
+        `1. **जातींची निवड:** गावरान (Desi), कडकनाथ (Kadaknath), किंवा कावेरी/ग्रामप्रिया या रोगप्रतिकारक जाती निवडा.\n` +
+        `2. **शेड व्यवस्थापन:** १०० पक्षांसाठी सुमारे १५०-२०० चौ.फूट हवेशीर शेड पुरेसे असते. जमिनीवर २-३ इंच भाताचा भुसा टाका.\n` +
+        `3. **खाद्य व्यवस्थापन:** परसातील मोकळे खाद्य सोबत मका, सोयाबीन पेंड व अझोला दिल्यास खाद्याचा खर्च ३५% कमी होतो.\n` +
+        `4. **लसीकरण:** लासोटा व गंबोरो लसीकरण वेळेवर करा जेणेकरून मरतूक २% खाली राहील.\n` +
+        `5. **नफा व शासकीय योजना:** नाबार्ड व पशुसंवर्धन विभागाकडून २५% ते ३३% अनुदान मिळते. कडकनाथ ₹६००-८००/किलो दराने विकले जाते.`;
+    } else {
+      reply = `**Guide to Backyard & Kadaknath Poultry Farming:**\n\n` +
+        `1. **Breed Selection:** Choose hardy breeds like pure Desi, Kadaknath, or dual-purpose Vanaraja.\n` +
+        `2. **Shed & Housing:** 150-200 sq.ft. predator-proof ventilated shed per 100 birds with dry paddy husk litter.\n` +
+        `3. **Feed Cost Reduction:** Supplement free-range foraging with broken maize and Azolla to cut feed expenses by 35%.\n` +
+        `4. **Vaccination:** Strictly administer LaSota (Day 5-7) and IBD Gumboro to keep mortality under 3%.\n` +
+        `5. **Subsidies & Revenue:** Access 25% to 33% capital subsidy under National Livestock Mission (NLM).`;
+    }
+  } else if (isDairy) {
+    sources.push('National Dairy Development Board (NDDB)', 'AHIDF Guidelines');
+    if (language === 'mr') {
+      reply = `**ग्रामीण दुग्ध व्यवसाय (Dairy Farming) व मूल्यवर्धन:**\n\n` +
+        `1. **जनावरांची निवड:** उच्च दूध देणाऱ्या गीर/साहिवाल गाई किंवा मुऱ्हा/जाफराबादी म्हशींची निवड करा.\n` +
+        `2. **चारा व्यवस्थापन:** मका सायलेज (मुरघास) व अझोला लागवड करून खाद्याचा खर्च ५०% कमी करा.\n` +
+        `3. **मूल्यवर्धन:** केवळ कच्चे दूध न विकता **शुद्ध तूप (₹२,०००/किलो), ताजे पनीर, खवा** तयार करून थेट ग्राहकांना विका.\n` +
+        `4. **आरोग्य व स्वच्छता:** दर ३ महिन्यांनी जंतनाशक आणि लाळ-खुरकूत (FMD) लसीकरण नियमित करा.\n` +
+        `5. **शासकीय सबसिडी:** राष्ट्रीय गोकुळ मिशन व नाबार्ड अंतर्गत २५% ते ३३% सबसिडी उपलब्ध आहे.`;
+    } else {
+      reply = `**Profitable Rural Dairy Farming & Value Addition:**\n\n` +
+        `1. **High-Yield Breeds:** Start with Gir, Sahiwal cows or Murrah buffaloes.\n` +
+        `2. **Green Fodder & Silage:** Cultivate maize silage and Azolla to lower concentrate feed costs.\n` +
+        `3. **Value Addition:** Produce A2 Bilona Ghee, fresh paneer, and curd to double profit margins.\n` +
+        `4. **Preventive Care:** Routine deworming and mandatory Foot & Mouth Disease (FMD) vaccination.\n` +
+        `5. **Subsidies:** Avail 25% to 33% subsidy under the Animal Husbandry Infrastructure Development Fund.`;
+    }
+  } else if (isFood) {
+    sources.push('Ministry of Food Processing Industries (MoFPI)', 'FSSAI FoSCoS Portal');
+    if (language === 'mr') {
+      reply = `**ग्रामीण भागात घरून अन्नप्रक्रिया (Food Processing) व्यवसाय:**\n\n` +
+        `1. **Udyam नोंदणी:** [udyamregistration.gov.in](https://udyamregistration.gov.in) वर आधार व पॅनद्वारे मोफत MSME नोंदणी करा.\n` +
+        `2. **FSSAI परवाना:** ₹१२ लाखांखालील उलाढालीसाठी FoSCoS पोर्टलवरून फक्त ₹१००/वर्ष फी भरून बेसिक रजिस्ट्रेशन मिळवा.\n` +
+        `3. **स्वच्छ पॅकेजिंग:** हवाबंद फूड-ग्रेड पाकिटांवर नाव, घटक, वजन, निर्मिती व एक्सपायरी तारीख स्पष्ट छापा.\n` +
+        `4. **PMFME शासकीय योजना:** खाद्य प्रक्रिया उपकरणांसाठी **३५% सबसिडी (कमाल ₹१० लाख)** मिळते.\n` +
+        `5. **मार्केटिंग:** WhatsApp Business कॅटलॉग आणि आठवडे बाजारात थेट विक्री सुरू करा.`;
+    } else {
+      reply = `**Steps to Start a Home Food Processing Unit in Rural India:**\n\n` +
+        `1. **Udyam Registration:** Register your micro-business for free on [udyamregistration.gov.in](https://udyamregistration.gov.in).\n` +
+        `2. **FSSAI Food License:** Get a Basic FSSAI registration on the FoSCoS portal (₹100/year).\n` +
+        `3. **Quality Packaging:** Use food-grade airtight pouches with labels showing ingredients and MFG date.\n` +
+        `4. **PMFME Scheme:** Avail 35% capital subsidy (up to ₹10 Lakhs) for food processing machinery.\n` +
+        `5. **Sales Channels:** Launch via WhatsApp Business catalogs and local weekly village markets.`;
     }
   } else if (isPmegp || isMudra || isShg) {
     sources.push('Khadi and Village Industries Commission (KVIC)', 'Ministry of MSME', 'PMMY Portal');
     if (language === 'mr') {
-      reply = `**सत्यापित शासकीय कर्ज व सबसिडी योजना:**\n\n• **PMEGP योजना:** उत्पादन व्यवसायासाठी ₹५० लाखांपर्यंत आणि सेवा व्यवसायासाठी ₹२० लाखांपर्यंत कर्ज. ग्रामीण महिला व मागास प्रवर्गासाठी **३५% सरकारी सबसिडी**.\n• **मुद्रा योजना (PMMY):** विनातारण (Collateral-free) ₹१० लाखांपर्यंत कर्ज (शिशु, किशोर, तरुण).\n• **महिला बचत गट (SHG):** NRLM अंतर्गत बचत गटांना बँकांकडून ₹१ ते ५ लाखांपर्यंत कमी व्याजदरात खेळते भांडवल मिळते.`;
-    } else if (language === 'hi') {
-      reply = `**सत्यापित सरकारी ऋण और सब्सिडी योजनाएं:**\n\n• **PMEGP योजना:** विनिर्माण हेतु ₹50 लाख और सेवा हेतु ₹20 लाख तक ऋण। ग्रामीण महिलाओं को **35% सरकारी सब्सिडी**।\n• **मुद्रा योजना:** बिना किसी गारंटी के ₹10 लाख तक का रियायती ऋण।\n• **स्वयं सहायता समूह (SHG):** आजीविका मिशन के तहत समूह को आसान बैंक क्रेडिट लिंकेज मिलता है।`;
+      reply = `**सत्यापित शासकीय कर्ज व सबसिडी योजना (PMEGP, मुद्रा, बचत गट):**\n\n` +
+        `1. **PMEGP योजना:** उत्पादन क्षेत्रासाठी ₹५० लाखांपर्यंत व सेवेसाठी ₹२० लाखांपर्यंत कर्ज. ग्रामीण महिला व मागास प्रवर्गासाठी **३५% सरकारी सबसिडी**.\n` +
+        `2. **मुद्रा योजना (PMMY):** विनातारण ₹१० लाखांपर्यंत कर्ज (शिशु, किशोर, तरुण) ५-१० दिवसांत बँकांकडून मिळते.\n` +
+        `3. **महिला बचत गट (SHG):** NRLM अंतर्गत बचत गटांना बँकांकडून ₹१ ते १० लाखांपर्यंत कमी व्याजदरात कर्ज मिळते.\n` +
+        `4. **लखपती दीदी योजना:** ग्रामीण महिलांचे वार्षिक उत्पन्न किमान ₹१ लाख करण्यासाठी कौशल्य व साधनसामग्री पाठबळ.\n` +
+        `5. **अर्ज कसा करावा:** [kviconline.gov.in](https://www.kviconline.gov.in) किंवा जवळच्या राष्ट्रीयीकृत बँकेच्या शाखेत DPR सह संपर्क साधा.`;
     } else {
-      reply = `**Verified Government Schemes for Rural Entrepreneurs:**\n\n• **PMEGP Scheme:** Up to ₹50 Lakhs for manufacturing and ₹20 Lakhs for services. Rural women receive **35% government subsidy**.\n• **Mudra Loan (PMMY):** Collateral-free credit up to ₹10 Lakhs with minimal paperwork.\n• **Self-Help Groups (SHG):** Bank-linkage loans under NRLM from ₹1 Lakh to ₹5 Lakhs at subsidized interest rates.`;
+      reply = `**Verified Government Schemes for Rural Entrepreneurs:**\n\n` +
+        `1. **PMEGP Scheme:** Up to ₹50 Lakhs for manufacturing and ₹20 Lakhs for services with **35% government subsidy** for rural women.\n` +
+        `2. **Mudra Loan (PMMY):** Collateral-free credit up to ₹10 Lakhs across Shishu, Kishor, and Tarun categories.\n` +
+        `3. **Self-Help Groups (SHG):** Bank-linkage loans under NRLM from ₹1 Lakh to ₹10 Lakhs at subsidized interest rates.\n` +
+        `4. **Lakhpati Didi Mission:** Skill training and enterprise support to achieve ₹1 Lakh+ sustainable annual income.\n` +
+        `5. **How to Apply:** Apply online on [kviconline.gov.in](https://www.kviconline.gov.in) or visit your local lead bank.`;
     }
   } else {
+    // Dynamic synthesis for ANY query
     if (language === 'mr') {
-      reply = `**'${query}' या विषयावर ग्रामीण कनेक्ट सल्ला:**\n\n1. **मागणी आणि बाजारपेठ:** आपल्या भागातील ग्राहकांची गरज ओळखा.\n2. **कमी भांडवलाने सुरुवात:** कमी खर्चात उत्पादन किंवा सेवा सुरू करा.\n3. **शासकीय पाठबळ:** PMEGP किंवा मुद्रा योजनेतून अर्थसहाय्य मिळवा.\n4. **डिजिटल संपर्क:** WhatsApp Business व UPI पेमेंटचा वापर करा.`;
+      reply = `**'${query}' या विषयावर ग्रामीण उद्योजकांसाठी सविस्तर मार्गदर्शन:**\n\n` +
+        `1. **स्थानिक बाजारपेठेचा अभ्यास:** आपल्या गावातील किंवा तालुक्यातील ग्राहकांच्या नेमक्या गरजा आणि नियमित मागणीचा अंदाज घ्या.\n` +
+        `2. **कमी खर्चात सुरुवात:** सुरुवातीला छोट्या प्रमाणावर सुरुवात करून उत्पादनाची गुणवत्ता व ग्राहकांचा प्रतिसाद तपासा.\n` +
+        `3. **उद्योग नोंदणी:** [udyamregistration.gov.in](https://udyamregistration.gov.in) वर मोफत MSME Udyam नोंदणी करा. अन्न व्यवसाय असल्यास FSSAI परवाना (₹१००/वर्ष) घ्या.\n` +
+        `4. **शासकीय सबसिडी व कर्ज:** PMEGP योजनेतून ३५% सबसिडी किंवा मुद्रा योजनेतून विनातारण कर्ज मिळवा.\n` +
+        `5. **WhatsApp Business द्वारे विक्री:** उत्पादनांचे फोटो व किमतींसह डिजिटल कॅटलॉग बनवा आणि UPI QR कोडने पेमेंट स्वीकारा.\n` +
+        `6. **हिशोब व नफा नियोजन:** दररोजच्या खर्चाची नोंद ठेवा आणि किमान २५% ते ३५% नफा जोडून दर निश्चित करा.`;
     } else if (language === 'hi') {
-      reply = `**'${query}' के संबंध में ग्रामीण कनेक्ट व्यावसायिक सलाह:**\n\n1. **बाजार मांग की समझ:** अपने स्थानीय क्षेत्र में ग्राहकों की वास्तविक जरूरत को पहचानें।\n2. **कम बजट में शुरुआत:** छोटे स्तर पर काम शुरू करें और गुणवत्ता पर ध्यान दें।\n3. **सरकारी योजनाएं:** PMEGP या मुद्रा योजना से आसान ऋण का लाभ उठाएं।\n4. **डिजिटल टूल्स:** WhatsApp Business और ऑनलाइन पेमेंट का उपयोग करें।`;
+      reply = `**'${query}' के संदर्भ में ग्रामीण उद्यमियों के लिए व्यावहारिक गाइड:**\n\n` +
+        `1. **स्थानीय बाजार व मांग की समझ:** अपने गाँव या कस्बे में ग्राहकों की वास्तविक जरूरत और कच्चे माल की उपलब्धता जांचें।\n` +
+        `2. **कम बजट में शुरुआत:** बड़े निवेश के बजाय छोटे स्तर पर काम शुरू करें ताकि जोखिम कम से कम रहे।\n` +
+        `3. **सरकारी रजिस्ट्रेशन:** udyamregistration.gov.in पर मुफ्त MSME पंजीकरण करें और आवश्यक परवाने प्राप्त करें।\n` +
+        `4. **सब्सिडी का लाभ:** PMEGP (35% सब्सिडी) अथवा मुद्रा योजना से रियायती बैंक ऋण प्राप्त करें।\n` +
+        `5. **WhatsApp Business से बिक्री:** उत्पाद फोटो और मूल्य के साथ डिजिटल कैटलॉग बनाकर स्थानीय समूहों में साझा करें।\n` +
+        `6. **मुनाफा व हिसाब-किताब:** लागत पर 25% से 35% लाभ मार्जिन जोड़कर उचित मूल्य तय करें।`;
     } else {
-      reply = `**RuralConnect Guidance on '${query}':**\n\n1. **Identify Market Demand:** Understand what local customers need and are willing to pay for.\n2. **Start Lean:** Keep initial capital expenses low and focus on quality.\n3. **Leverage Support:** Explore micro-credit schemes like PMEGP or Mudra loans.\n4. **Use Digital Tools:** Adopt WhatsApp Business for sales and UPI for instant payments.`;
+      reply = `**Comprehensive Guidance on '${query}':**\n\n` +
+        `1. **Market Demand Assessment:** Study local community requirements and source affordable raw materials nearby.\n` +
+        `2. **Lean Micro-Enterprise Setup:** Launch with minimal capital investment to validate quality and gain customer trust.\n` +
+        `3. **Essential Registrations:** Complete free MSME registration on [udyamregistration.gov.in](https://udyamregistration.gov.in).\n` +
+        `4. **Financial Schemes:** Leverage PMEGP for 35% government subsidy or Mudra for collateral-free credit.\n` +
+        `5. **WhatsApp Commerce:** Create a daylight product catalog and accept instant UPI QR payments.\n` +
+        `6. **Financial Bookkeeping:** Track daily operational expenses and maintain a healthy 25-35% profit margin.`;
     }
   }
 
   const suggested_questions = [
-    language === 'mr' ? 'घरून खाद्य व्यवसाय कसा सुरू करावा?' : 'How can I start a small food business from home?',
+    language === 'mr' ? 'व्हॉट्सअॅप बिझनेसवर उत्पादनांचा प्रसार कसा करावा?' : 'How can I promote my products on WhatsApp Business?',
     language === 'mr' ? 'PMEGP योजनेतून महिलांना किती सबसिडी मिळते?' : 'What subsidy does PMEGP give to rural women?',
-    language === 'mr' ? 'व्हॉट्सअॅप बिझनेसवर उत्पादनांचा प्रचार कसा करावा?' : 'How can I promote my products on WhatsApp Business?',
+    language === 'mr' ? 'घरून खाद्य प्रक्रिया व्यवसाय कसा सुरू करावा?' : 'How can I start a small food business from home?',
   ];
 
   return { reply, sources, suggested_questions };

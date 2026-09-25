@@ -41,34 +41,40 @@ async def get_suggested_questions(language: str = "en"):
 @router.post("/chat", response_model=ChatResponse)
 async def chat(query: ChatQuery, current_user: Optional[dict] = Depends(get_current_user_optional)):
     db = get_database()
-    lang = query.language or "en"
+    user_lang_pref = query.language
     if current_user and not query.language:
-        lang = current_user.get("preferred_language", "en")
-        
-    reply, sources = await generate_rag_answer(query.message, lang)
-    
-    # Save to chat_history collection if user or session available
+        user_lang_pref = current_user.get("preferred_language")
+
     session_id = query.session_id or str(uuid.uuid4())
     user_id = current_user["_id"] if current_user else "anonymous"
+
+    answer, detected_lang, is_retrieved, sources, suggested = await generate_rag_answer(
+        query=query.message,
+        user_language_pref=user_lang_pref,
+        session_id=session_id
+    )
+
+    # Save to chat_history collection
     now_str = datetime.utcnow().isoformat()
-    
     if db is not None:
         await db.chat_history.insert_one({
             "_id": str(uuid.uuid4()),
             "session_id": session_id,
             "user_id": user_id,
             "query": query.message,
-            "reply": reply,
-            "language": lang,
+            "reply": answer,
+            "answer": answer,
+            "language": detected_lang,
+            "retrieved": is_retrieved,
             "sources": sources,
             "created_at": now_str
         })
-        
-    suggested = SUGGESTED_QUESTIONS.get(lang, SUGGESTED_QUESTIONS["en"])[:3]
-    
+
     return ChatResponse(
-        reply=reply,
-        language=lang,
+        reply=answer,
+        answer=answer,
+        language=detected_lang,
+        retrieved=is_retrieved,
         sources=sources,
         suggested_questions=suggested
     )

@@ -38,10 +38,12 @@ async def seed_database():
             "business_type": "Services",
             "business_description": "Rural Development Officer and Platform Administrator.",
             "interests": ["Administration", "Policy", "Mentorship"],
-            "profile_photo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80",
+            "profile_photo": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=150&auto=format&fit=crop&q=80",
             "created_at": now_str,
             "updated_at": now_str
         })
+    else:
+        await db.users.update_one({"email": "admin@ruralconnect.in"}, {"$set": {"profile_photo": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=150&auto=format&fit=crop&q=80"}})
         
     demo_user = await db.users.find_one({"email": "sunita@ruralconnect.in"})
     if not demo_user:
@@ -59,10 +61,12 @@ async def seed_database():
             "business_type": "Food",
             "business_description": "Organic spice processing, homemade pickles, and multigrain flour packaging with Mahila Bachat Gat.",
             "interests": ["Food Processing", "Packaging", "WhatsApp Business", "Government Subsidies"],
-            "profile_photo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+            "profile_photo": "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80",
             "created_at": now_str,
             "updated_at": now_str
         })
+    else:
+        await db.users.update_one({"email": "sunita@ruralconnect.in"}, {"$set": {"profile_photo": "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80"}})
 
     # 2. Courses (All 5 YouTube Lectures integrated directly!)
     if existing_courses == 0:
@@ -120,7 +124,7 @@ async def seed_database():
                 "description": "Introduction to entrepreneurial mindset, identifying community needs, and building sustainable village business models.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/kAAO-qO2kFg",
-                "embed_url": "https://www.youtube.com/embed/kAAO-qO2kFg",
+                "embed_url": "https://www.youtube-nocookie.com/embed/kAAO-qO2kFg",
                 "provider": "YouTube",
                 "language": "Hindi / English",
                 "duration_minutes": 32,
@@ -143,7 +147,7 @@ async def seed_database():
                 "description": "Business planning, customer acquisition strategies, and cost calculation for small products and services.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/pC5l5j2u9SQ",
-                "embed_url": "https://www.youtube.com/embed/pC5l5j2u9SQ",
+                "embed_url": "https://www.youtube-nocookie.com/embed/pC5l5j2u9SQ",
                 "provider": "YouTube",
                 "language": "Hindi / English",
                 "duration_minutes": 35,
@@ -166,7 +170,7 @@ async def seed_database():
                 "description": "Scaling your venture, overcoming supply chain challenges, and hiring local community talent.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/1Tf9NHbRPYM",
-                "embed_url": "https://www.youtube.com/embed/1Tf9NHbRPYM",
+                "embed_url": "https://www.youtube-nocookie.com/embed/1Tf9NHbRPYM",
                 "provider": "YouTube",
                 "language": "Hindi / English",
                 "duration_minutes": 28,
@@ -191,7 +195,7 @@ async def seed_database():
                 "description": "Foundations of digital marketing, setting up a professional mobile presence, and reaching regional customers.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/ZucOiqzRznA",
-                "embed_url": "https://www.youtube.com/embed/ZucOiqzRznA",
+                "embed_url": "https://www.youtube-nocookie.com/embed/ZucOiqzRznA",
                 "provider": "YouTube",
                 "language": "Hindi / English",
                 "duration_minutes": 31,
@@ -214,7 +218,7 @@ async def seed_database():
                 "description": "WhatsApp Business selling, social media reels, and digital UPI payments for hassle-free orders.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/OC8s2_VSQFA",
-                "embed_url": "https://www.youtube.com/embed/OC8s2_VSQFA",
+                "embed_url": "https://www.youtube-nocookie.com/embed/OC8s2_VSQFA",
                 "provider": "YouTube",
                 "language": "Hindi / English",
                 "duration_minutes": 34,
@@ -239,7 +243,7 @@ async def seed_database():
                 "description": "How to register and operate a vibrant Mahila Bachat Gat, maintain registers, and access subsidized bank loans.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/pC5l5j2u9SQ",
-                "embed_url": "https://www.youtube.com/embed/pC5l5j2u9SQ",
+                "embed_url": "https://www.youtube-nocookie.com/embed/pC5l5j2u9SQ",
                 "provider": "YouTube",
                 "language": "Marathi / Hindi",
                 "duration_minutes": 35,
@@ -262,7 +266,7 @@ async def seed_database():
                 "description": "Step-by-step guidance on basic packaging, moisture control, labeling requirements, and free/low-cost FSSAI registration.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/kAAO-qO2kFg",
-                "embed_url": "https://www.youtube.com/embed/kAAO-qO2kFg",
+                "embed_url": "https://www.youtube-nocookie.com/embed/kAAO-qO2kFg",
                 "provider": "YouTube",
                 "language": "Marathi / Hindi",
                 "duration_minutes": 40,
@@ -285,7 +289,7 @@ async def seed_database():
                 "description": "Understanding PMEGP, Mudra, and Stand-Up India schemes to finance machinery and working capital.",
                 "video_source_type": "youtube",
                 "video_url": "https://youtu.be/1Tf9NHbRPYM",
-                "embed_url": "https://www.youtube.com/embed/1Tf9NHbRPYM",
+                "embed_url": "https://www.youtube-nocookie.com/embed/1Tf9NHbRPYM",
                 "provider": "YouTube",
                 "language": "Marathi / Hindi",
                 "duration_minutes": 35,
@@ -304,86 +308,145 @@ async def seed_database():
         await db.lessons.insert_many(lessons)
 
     # 4. Specialist Indian Mentors (Realistic Indian professionals, Maharashtra & rural context)
-    existing_mentors = await db.mentors.count_documents({})
-    if existing_mentors == 0:
-        mentors = [
-            {
-                "_id": "mentor-01",
-                "name": "Dr. Ramesh Kulkarni",
-                "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-                "expertise": "Agro-Processing & Dairy Farming",
-                "experience": "18+ years",
-                "qualification": "Ph.D. in Agriculture Economics (MPKV Rahuri)",
-                "languages": ["Marathi", "Hindi", "English"],
-                "location": "Pune, Maharashtra",
-                "availability": "Mon, Wed, Fri (4 PM - 7 PM)",
-                "rating": 4.9,
-                "sessions": 142,
-                "bio": "Specializes in helping farmer producer companies (FPC) and rural dairy farmers set up cold storage, milk chilling plants, and organic certification.",
-                "is_verified": True
-            },
-            {
-                "_id": "mentor-02",
-                "name": "Sunita Patil",
-                "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&auto=format&fit=crop&q=80",
-                "expertise": "Self-Help Groups & Micro-Finance",
-                "experience": "14+ years",
-                "qualification": "M.S.W., Rural Livelihoods Consultant",
-                "languages": ["Marathi", "Hindi"],
-                "location": "Kolhapur, Maharashtra",
-                "availability": "Tue, Thu, Sat (10 AM - 1 PM)",
-                "rating": 5.0,
-                "sessions": 218,
-                "bio": "Trained over 400 women-led self-help groups across western Maharashtra in micro-savings, bank credit linkage, and conflict resolution.",
-                "is_verified": True
-            },
-            {
-                "_id": "mentor-03",
-                "name": "Vikram Shinde",
-                "photo": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80",
-                "expertise": "Handicrafts, Textiles & Retail Branding",
-                "experience": "12+ years",
-                "qualification": "National Institute of Design (NID) Alum",
-                "languages": ["Hindi", "Marathi", "English"],
-                "location": "Nashik, Maharashtra",
-                "availability": "Mon to Fri (5 PM - 8 PM)",
-                "rating": 4.8,
-                "sessions": 98,
-                "bio": "Helps Paithani weavers, bamboo artisans, and pottery collectives modernise design aesthetics, packaging, and showcase in national craft exhibitions.",
-                "is_verified": True
-            },
-            {
-                "_id": "mentor-04",
-                "name": "Ananya Deshmukh",
-                "photo": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=300&auto=format&fit=crop&q=80",
-                "expertise": "Digital Marketing & WhatsApp Commerce",
-                "experience": "9+ years",
-                "qualification": "MBA Marketing (Symbiosis Pune)",
-                "languages": ["Marathi", "Hindi", "English"],
-                "location": "Aurangabad (Chhatrapati Sambhajinagar)",
-                "availability": "Wed, Sat, Sun (2 PM - 6 PM)",
-                "rating": 4.9,
-                "sessions": 165,
-                "bio": "Digital growth strategist dedicated to onboarding rural tier-3 and village entrepreneurs onto social media storefronts and hyperlocal delivery apps.",
-                "is_verified": True
-            },
-            {
-                "_id": "mentor-05",
-                "name": "Priya Gaikwad",
-                "photo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80",
-                "expertise": "Government Schemes & Bank Loans",
-                "experience": "15+ years",
-                "qualification": "Former Lead Bank Manager (Bank of Maharashtra)",
-                "languages": ["Marathi", "Hindi", "English"],
-                "location": "Satara, Maharashtra",
-                "availability": "Mon, Thu, Sat (3 PM - 6 PM)",
-                "rating": 5.0,
-                "sessions": 310,
-                "bio": "Expert in PMEGP and Mudra loan documentation, project report preparation, and bank interview guidance for rural women entrepreneurs.",
-                "is_verified": True
-            }
-        ]
-        await db.mentors.insert_many(mentors)
+    mentors = [
+        {
+            "_id": "mentor-01",
+            "name": "Dr. Ramesh Kulkarni",
+            "photo": "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Agro-Processing & Dairy Farming",
+            "experience": "18+ years",
+            "qualification": "Ph.D. in Agriculture Economics (MPKV Rahuri)",
+            "languages": ["Marathi", "Hindi", "English"],
+            "location": "Pune, Maharashtra",
+            "availability": "Mon, Wed, Fri (4 PM - 7 PM)",
+            "rating": 4.9,
+            "sessions": 142,
+            "bio": "Specializes in helping farmer producer companies (FPC) and rural dairy farmers set up cold storage, milk chilling plants, and organic certification.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-02",
+            "name": "Sunita Patil",
+            "photo": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Self-Help Groups & Micro-Finance",
+            "experience": "14+ years",
+            "qualification": "M.S.W., Rural Livelihoods Consultant",
+            "languages": ["Marathi", "Hindi"],
+            "location": "Kolhapur, Maharashtra",
+            "availability": "Tue, Thu, Sat (10 AM - 1 PM)",
+            "rating": 5.0,
+            "sessions": 218,
+            "bio": "Trained over 400 women-led self-help groups across western Maharashtra in micro-savings, bank credit linkage, and conflict resolution.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-03",
+            "name": "Vikram Shinde",
+            "photo": "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Handicrafts, Textiles & Retail Branding",
+            "experience": "12+ years",
+            "qualification": "National Institute of Design (NID) Alum",
+            "languages": ["Hindi", "Marathi", "English"],
+            "location": "Nashik, Maharashtra",
+            "availability": "Mon to Fri (5 PM - 8 PM)",
+            "rating": 4.8,
+            "sessions": 98,
+            "bio": "Helps Paithani weavers, bamboo artisans, and pottery collectives modernise design aesthetics, packaging, and showcase in national craft exhibitions.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-04",
+            "name": "Ananya Deshmukh",
+            "photo": "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Digital Marketing & WhatsApp Commerce",
+            "experience": "9+ years",
+            "qualification": "MBA Marketing (Symbiosis Pune)",
+            "languages": ["Marathi", "Hindi", "English"],
+            "location": "Aurangabad (Chhatrapati Sambhajinagar)",
+            "availability": "Wed, Sat, Sun (2 PM - 6 PM)",
+            "rating": 4.9,
+            "sessions": 165,
+            "bio": "Digital growth strategist dedicated to onboarding rural tier-3 and village entrepreneurs onto social media storefronts and hyperlocal delivery apps.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-05",
+            "name": "Priya Gaikwad",
+            "photo": "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Government Schemes & Bank Loans",
+            "experience": "15+ years",
+            "qualification": "Former Lead Bank Manager (Bank of Maharashtra)",
+            "languages": ["Marathi", "Hindi", "English"],
+            "location": "Satara, Maharashtra",
+            "availability": "Mon, Thu, Sat (3 PM - 6 PM)",
+            "rating": 5.0,
+            "sessions": 310,
+            "bio": "Expert in PMEGP and Mudra loan documentation, project report preparation, and bank interview guidance for rural women entrepreneurs.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-06",
+            "name": "Suresh Jadhav",
+            "photo": "https://images.unsplash.com/photo-1598550476439-6847785fcea6?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Organic Farming & Solar Schemes",
+            "experience": "16+ years",
+            "qualification": "M.Sc. Horticulture & Certified Organic Auditor",
+            "languages": ["Marathi", "Hindi"],
+            "location": "Sangli, Maharashtra",
+            "availability": "Mon, Wed, Sat (9 AM - 12 PM)",
+            "rating": 4.9,
+            "sessions": 184,
+            "bio": "Pioneer in organic vermicompost, greenhouse drip irrigation, and availing PM-KUSUM 90% solar pump government subsidies for farmers.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-07",
+            "name": "Dr. Meera Joshi",
+            "photo": "https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Millet Processing & FSSAI Licensing",
+            "experience": "11+ years",
+            "qualification": "Food Technologist (CFTRI Mysore)",
+            "languages": ["Marathi", "Hindi", "English"],
+            "location": "Nagpur, Maharashtra",
+            "availability": "Tue, Thu, Fri (3 PM - 6 PM)",
+            "rating": 4.9,
+            "sessions": 126,
+            "bio": "Consultant for Shree Anna millets value addition, bakery items, shelf-life testing, and obtaining FoSCoS state & basic FSSAI licenses.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-08",
+            "name": "Dr. Arjun Rathod",
+            "photo": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Poultry & Goat Rearing Micro-Enterprises",
+            "experience": "13+ years",
+            "qualification": "B.V.Sc & A.H. (Veterinary Consultant)",
+            "languages": ["Marathi", "Hindi", "English"],
+            "location": "Amravati, Maharashtra",
+            "availability": "Mon to Fri (11 AM - 2 PM)",
+            "rating": 4.8,
+            "sessions": 152,
+            "bio": "Advises farmers on disease-resistant Kadaknath / Desi poultry breeds, Osmanabadi stall-fed goat rearing sheds, and vaccination management.",
+            "is_verified": True
+        },
+        {
+            "_id": "mentor-09",
+            "name": "Kavita Choudhary",
+            "photo": "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400&auto=format&fit=crop&q=80",
+            "expertise": "Rural Women SHG Federation & Lakhpati Didi",
+            "experience": "17+ years",
+            "qualification": "NRLM Master Trainer & Social Entrepreneur",
+            "languages": ["Marathi", "Hindi"],
+            "location": "Solapur, Maharashtra",
+            "availability": "Tue, Wed, Sat (1 PM - 4 PM)",
+            "rating": 5.0,
+            "sessions": 275,
+            "bio": "National mentor for women federation empowerment, community revolving funds, and Lakhpati Didi business model implementation in rural areas.",
+            "is_verified": True
+        }
+    ]
+    for m in mentors:
+        await db.mentors.update_one({"_id": m["_id"]}, {"$set": m}, upsert=True)
 
     # 5. Training Sessions & Workshops
     existing_training = await db.training_sessions.count_documents({})
@@ -608,66 +671,33 @@ async def seed_database():
         await db.government_schemes.insert_many(schemes)
 
     # 7. Knowledge Base for AI RAG
-    existing_kb = await db.knowledge_base.count_documents({})
-    if existing_kb == 0:
-        kb_items = [
-            {
-                "_id": "kb-01",
-                "topic": "Starting a Home Food Business",
-                "category": "Food Processing",
-                "question": "How can I start a small food business from home in rural India?",
-                "answer": "To start a small home food business (pickles, spices, papad, sweets): 1. Register for a free Udyam Registration (udyamregistration.gov.in). 2. Obtain a basic FSSAI Registration on the FoSCoS portal (costs only Rs. 100/year for turnover below Rs. 12 Lakhs). 3. Use airtight, clean packaging with clear labeling (manufacturing date, ingredients, expiry). 4. Use WhatsApp Business to share catalogs with relatives, local grocery stores, and weekly haats.",
-                "language": "en",
-                "tags": ["food", "fssai", "packaging", "home business"],
-                "source": "Ministry of Food Processing Industries (MoFPI) Guidelines",
-                "is_verified": True
-            },
-            {
-                "_id": "kb-02",
-                "topic": "WhatsApp Business Sales",
-                "category": "Digital Marketing",
-                "question": "How can I promote my handmade products on WhatsApp Business?",
-                "answer": "1. Download WhatsApp Business (free on Play Store). 2. Add your business profile with logo, operating hours, and location. 3. Create a Catalog with 5-10 clear photos, exact price, and simple description. 4. Share your catalog link on family groups, Gram Panchayat groups, and local buyer networks. 5. Set up quick automated greeting and away messages.",
-                "language": "en",
-                "tags": ["whatsapp", "marketing", "sales", "catalog"],
-                "source": "Rural Marketing Association of India (RMAI)",
-                "is_verified": True
-            },
-            {
-                "_id": "kb-03",
-                "topic": "PMEGP Loan Subsidy",
-                "category": "Government Schemes",
-                "question": "What subsidy does PMEGP give to rural women entrepreneurs?",
-                "answer": "Under PMEGP, special category beneficiaries (including rural women, SC/ST, and OBC) receive a 35% capital subsidy for projects established in rural areas (compared to 25% for general category in rural areas). Beneficiary own contribution is only 5% of the total project cost. The remaining 60% to 90% is financed as a bank loan.",
-                "language": "en",
-                "tags": ["pmegp", "subsidy", "women", "loan", "kvic"],
-                "source": "Khadi and Village Industries Commission (KVIC) Official Manual",
-                "is_verified": True
-            },
-            {
-                "_id": "kb-04",
-                "topic": "Self-Help Group Bank Linkage",
-                "category": "Finance",
-                "question": "How do self-help groups (SHG) get bank credit in Maharashtra?",
-                "answer": "A Mahila Bachat Gat needs: 1. Minimum 6 months of continuous regular monthly savings and internal lending. 2. Proper upkeep of attendance, meeting, cash, and loan ledgers. 3. Resolution passed by members. 4. Grading evaluation by the bank or MAVIM Prerika. Groups meeting these criteria are eligible for collateral-free credit linkage under DAY-NRLM with interest subvention.",
-                "language": "en",
-                "tags": ["shg", "bachat gat", "bank loan", "mavim", "nrlm"],
-                "source": "Maharashtra State Rural Livelihoods Mission (Umed)",
-                "is_verified": True
-            },
-            {
-                "_id": "kb-05",
-                "topic": "Packaging and Branding Tips",
-                "category": "Branding",
-                "question": "How can I create an attractive brand for my village products on a low budget?",
-                "answer": "1. Choose a simple, memorable name representing quality or local pride. 2. Use eco-friendly kraft paper stand-up pouches or clean glass jars. 3. Print self-adhesive color stickers locally (usually costs only 50 paise to 1 rupee per sticker). 4. Ensure label contains: Product Name, Ingredients, Weight, Batch No., Mfg Date, Best Before, and Contact Phone Number.",
-                "language": "en",
-                "tags": ["branding", "packaging", "labels", "design"],
-                "source": "Indian Institute of Packaging (IIP)",
-                "is_verified": True
+    # 7. Knowledge Base for AI RAG (72 Core Multilingual Records)
+    try:
+        from app.knowledge_data import CORE_72_KNOWLEDGE_BASE
+        for item in CORE_72_KNOWLEDGE_BASE:
+            doc = {
+                "_id": item["id"],
+                "id": item["id"],
+                "title": item["title"],
+                "category": item["category"],
+                "question_en": item["question_en"],
+                "answer_en": item["answer_en"],
+                "question_hi": item["question_hi"],
+                "answer_hi": item["answer_hi"],
+                "question_mr": item["question_mr"],
+                "answer_mr": item["answer_mr"],
+                "question": item["question_en"],
+                "answer": item["answer_en"],
+                "verified": item.get("verified", True),
+                "is_verified": item.get("verified", True),
+                "source": item.get("source", "RuralConnect Verified Advisory"),
+                "updated_at": item.get("updated_at", "2026-03-01T00:00:00Z"),
+                "tags": item.get("tags", [])
             }
-        ]
-        await db.knowledge_base.insert_many(kb_items)
+            await db.knowledge_base.update_one({"_id": item["id"]}, {"$set": doc}, upsert=True)
+        logger.info(f"Seeded/Updated {len(CORE_72_KNOWLEDGE_BASE)} multilingual knowledge base items.")
+    except Exception as e:
+        logger.warning(f"Failed to seed knowledge base: {e}")
 
     # 8. Community Posts (Authentic Indian rural entrepreneur voices)
     existing_posts = await db.community_posts.count_documents({})
@@ -678,7 +708,7 @@ async def seed_database():
                 "user_id": "user-demo-01",
                 "user_name": "Sunita Kamble",
                 "user_business": "Kamble Spices & Pickles • Satara",
-                "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+                "avatar": "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80",
                 "content": "आज आमच्या बचत गटाने कोल्हापुरी लाल तिखट आणि लोणच्याचे पहिले ५० बॉक्स पुण्याच्या एका किराणा दुकानाला पाठवले! रुरल कनेक्टच्या डिजिटल मार्केटिंग कोर्समधील व्हॉट्सअॅप कॅटलॉग ट्रिक खूप उपयोगी पडली. धन्यवाद!",
                 "image_url": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&auto=format&fit=crop&q=80",
                 "category": "Success Story",
@@ -690,7 +720,7 @@ async def seed_database():
                 "user_id": "user-demo-02",
                 "user_name": "Kavita Jadhav",
                 "user_business": "Surabhi Organic Dairy • Nashik",
-                "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+                "avatar": "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=150&auto=format&fit=crop&q=80",
                 "content": "Does anyone know if PMFME subsidy applies to small milk chilling units for a group of 5 dairy farmers? We want to avoid selling raw milk to middlemen at low rates.",
                 "image_url": None,
                 "category": "Question",
@@ -702,7 +732,7 @@ async def seed_database():
                 "user_id": "user-demo-03",
                 "user_name": "Rukmini Shinde",
                 "user_business": "Paithani Handlooms • Yeola",
-                "avatar": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&auto=format&fit=crop&q=80",
+                "avatar": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80",
                 "content": "Handcrafted pure silk Paithani dupattas made by our village artisan collective. We started accepting orders across Maharashtra using simple Google Pay QR codes!",
                 "image_url": "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop&q=80",
                 "category": "Product Showcase",
@@ -711,16 +741,24 @@ async def seed_database():
             }
         ]
         await db.community_posts.insert_many(posts)
+    else:
+        await db.community_posts.update_one({"_id": "post-01"}, {"$set": {"avatar": "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80"}})
+        await db.community_posts.update_one({"_id": "post-02"}, {"$set": {"avatar": "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=150&auto=format&fit=crop&q=80"}})
+        await db.community_posts.update_one({"_id": "post-03"}, {"$set": {"avatar": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80"}})
 
         # Initial comment on post-02 by mentor Dr. Ramesh Kulkarni
-        await db.comments.insert_one({
-            "_id": "comment-01",
-            "post_id": "post-02",
-            "user_id": "mentor-01",
-            "user_name": "Dr. Ramesh Kulkarni (Agro Mentor)",
-            "content": "Yes, Kavita ji! Under PMFME, milk chilling and value addition (ghee, paneer, curd) are covered with a 35% capital subsidy. You can book an appointment with me through the Mentors section, and I will share the exact DPR format.",
-            "created_at": now_str
-        })
+        await db.comments.update_one(
+            {"_id": "comment-01"},
+            {"$set": {
+                "_id": "comment-01",
+                "post_id": "post-02",
+                "user_id": "mentor-01",
+                "user_name": "Dr. Ramesh Kulkarni (Agro Mentor)",
+                "content": "Yes, Kavita ji! Under PMFME, milk chilling and value addition (ghee, paneer, curd) are covered with a 35% capital subsidy. You can book an appointment with me through the Mentors section, and I will share the exact DPR format.",
+                "created_at": now_str
+            }},
+            upsert=True
+        )
 
     logger.info("Seed data verification completed successfully.")
 

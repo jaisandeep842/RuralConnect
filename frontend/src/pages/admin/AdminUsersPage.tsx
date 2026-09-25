@@ -72,7 +72,7 @@ export const AdminUsersPage: React.FC = () => {
                   <td className="p-4 font-semibold text-slate-900">
                     <div className="flex items-center gap-3">
                       <img
-                        src={u.profile_photo || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80'}
+                        src={u.profile_photo || 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=100&auto=format&fit=crop&q=80'}
                         alt=""
                         className="w-9 h-9 rounded-full object-cover border"
                       />

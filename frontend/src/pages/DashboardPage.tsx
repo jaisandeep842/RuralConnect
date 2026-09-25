@@ -59,7 +59,7 @@ export const DashboardPage: React.FC = () => {
       <div className="bg-gradient-to-r from-amber-100/80 via-white to-brand-50/80 rounded-3xl p-6 sm:p-8 border border-amber-200/80 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <img
-            src={currentUser?.profile_photo || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80'}
+            src={currentUser?.profile_photo || 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80'}
             alt={currentUser?.full_name}
             className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-brand-600 shadow-md"
           />

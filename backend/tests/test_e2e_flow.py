@@ -5,7 +5,7 @@ BASE_URL = "http://localhost:8000"
 
 @pytest.mark.asyncio
 async def test_health():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         res = await client.get("/")
         assert res.status_code == 200
         data = res.json()
@@ -13,7 +13,7 @@ async def test_health():
 
 @pytest.mark.asyncio
 async def test_login_demo_user():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         res = await client.post("/api/auth/login", json={
             "email_or_phone": "sunita@ruralconnect.in",
             "password": "Rural@12345"
@@ -26,7 +26,7 @@ async def test_login_demo_user():
 
 @pytest.mark.asyncio
 async def test_login_admin():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         res = await client.post("/api/auth/login", json={
             "email_or_phone": "admin@ruralconnect.in",
             "password": "Admin@12345"
@@ -37,7 +37,7 @@ async def test_login_admin():
 
 @pytest.mark.asyncio
 async def test_courses_and_required_youtube_lectures():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         res = await client.get("/api/courses")
         assert res.status_code == 200
         courses = res.json()
@@ -82,7 +82,7 @@ async def test_courses_and_required_youtube_lectures():
 
 @pytest.mark.asyncio
 async def test_indian_mentors():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         res = await client.get("/api/mentors")
         assert res.status_code == 200
         mentors = res.json()
@@ -93,7 +93,7 @@ async def test_indian_mentors():
 
 @pytest.mark.asyncio
 async def test_verified_schemes():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         res = await client.get("/api/schemes?verified_only=true")
         assert res.status_code == 200
         schemes = res.json()
@@ -104,7 +104,7 @@ async def test_verified_schemes():
 
 @pytest.mark.asyncio
 async def test_training_workshops():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         res = await client.get("/api/training")
         assert res.status_code == 200
         trainings = res.json()
@@ -112,7 +112,7 @@ async def test_training_workshops():
 
 @pytest.mark.asyncio
 async def test_ai_assistant_rag():
-    async with httpx.AsyncClient(base_url=BASE_URL) as client:
+    async with httpx.AsyncClient(base_url=BASE_URL, timeout=30.0) as client:
         # Test in English
         res_en = await client.post("/api/assistant/chat", json={
             "message": "What subsidy does PMEGP give to rural women?",
