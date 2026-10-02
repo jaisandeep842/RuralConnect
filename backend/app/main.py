@@ -57,6 +57,7 @@ app.include_router(community.router)
 app.include_router(certificates.router)
 app.include_router(notifications.router)
 app.include_router(assistant.router)
+app.include_router(assistant.ai_router)
 app.include_router(recommendations.router)
 app.include_router(admin.router)
 

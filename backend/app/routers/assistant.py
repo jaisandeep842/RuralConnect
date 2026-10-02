@@ -38,8 +38,7 @@ async def get_suggested_questions(language: str = "en"):
     lang = language if language in SUGGESTED_QUESTIONS else "en"
     return {"questions": SUGGESTED_QUESTIONS[lang]}
 
-@router.post("/chat", response_model=ChatResponse)
-async def chat(query: ChatQuery, current_user: Optional[dict] = Depends(get_current_user_optional)):
+async def _process_query_internal(query: ChatQuery, current_user: Optional[dict] = None) -> ChatResponse:
     db = get_database()
     user_lang_pref = query.language
     if current_user and not query.language:
@@ -54,13 +53,16 @@ async def chat(query: ChatQuery, current_user: Optional[dict] = Depends(get_curr
         session_id=session_id
     )
 
-    # Save to chat_history collection
+    # Save to chat_history collection with all standard fields
     now_str = datetime.utcnow().isoformat()
     if db is not None:
         await db.chat_history.insert_one({
             "_id": str(uuid.uuid4()),
             "session_id": session_id,
+            "conversation_id": session_id,
             "user_id": user_id,
+            "user_message": query.message,
+            "assistant_response": answer,
             "query": query.message,
             "reply": answer,
             "answer": answer,
@@ -79,6 +81,15 @@ async def chat(query: ChatQuery, current_user: Optional[dict] = Depends(get_curr
         suggested_questions=suggested
     )
 
+@router.post("/chat", response_model=ChatResponse)
+async def chat(query: ChatQuery, current_user: Optional[dict] = Depends(get_current_user_optional)):
+    return await _process_query_internal(query, current_user)
+
+@router.post("/voice", response_model=ChatResponse)
+async def voice_chat(query: ChatQuery, current_user: Optional[dict] = Depends(get_current_user_optional)):
+    """Voice-specific assistant endpoint using the same verified RAG pipeline."""
+    return await _process_query_internal(query, current_user)
+
 @router.get("/history")
 async def get_chat_history(session_id: Optional[str] = None, current_user: Optional[dict] = Depends(get_current_user_optional)):
     db = get_database()
@@ -86,7 +97,7 @@ async def get_chat_history(session_id: Optional[str] = None, current_user: Optio
     if current_user:
         query["user_id"] = current_user["_id"]
     elif session_id:
-        query["session_id"] = session_id
+        query["$or"] = [{"session_id": session_id}, {"conversation_id": session_id}]
     else:
         return []
         
@@ -95,10 +106,29 @@ async def get_chat_history(session_id: Optional[str] = None, current_user: Optio
     for h in history:
         results.append({
             "id": h["_id"],
-            "query": h.get("query", ""),
-            "reply": h.get("reply", ""),
+            "query": h.get("query") or h.get("user_message", ""),
+            "reply": h.get("reply") or h.get("assistant_response", ""),
             "language": h.get("language", "en"),
             "sources": h.get("sources", []),
             "created_at": h.get("created_at", "")
         })
     return results
+
+# Alias router for /api/ai/* routes
+ai_router = APIRouter(prefix="/api/ai", tags=["AI Voice & Chat Assistant (Alias)"])
+
+@ai_router.post("/chat", response_model=ChatResponse)
+async def ai_chat(query: ChatQuery, current_user: Optional[dict] = Depends(get_current_user_optional)):
+    return await _process_query_internal(query, current_user)
+
+@ai_router.post("/voice", response_model=ChatResponse)
+async def ai_voice(query: ChatQuery, current_user: Optional[dict] = Depends(get_current_user_optional)):
+    return await _process_query_internal(query, current_user)
+
+@ai_router.get("/history")
+async def ai_history(session_id: Optional[str] = None, current_user: Optional[dict] = Depends(get_current_user_optional)):
+    return await get_chat_history(session_id, current_user)
+
+@ai_router.get("/suggested")
+async def ai_suggested(language: str = "en"):
+    return await get_suggested_questions(language)

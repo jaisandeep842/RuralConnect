@@ -103,14 +103,25 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
               Verified Knowledge Sources:
             </span>
             <div className="flex flex-wrap gap-1.5">
-              {message.sources.map((src, i) => (
-                <span
-                  key={i}
-                  className="bg-emerald-50 text-emerald-900 px-2 py-0.5 rounded-md font-semibold border border-emerald-200 text-[11px]"
-                >
-                  {src}
-                </span>
-              ))}
+              {message.sources.map((src: any, i: number) => {
+                const displayText =
+                  typeof src === 'string'
+                    ? src
+                    : typeof src === 'object' && src !== null
+                    ? src.title
+                      ? `${src.title}${src.source ? ` • ${src.source}` : ''}`
+                      : src.source || src.category || 'Verified Source'
+                    : String(src);
+
+                return (
+                  <span
+                    key={i}
+                    className="bg-emerald-50 text-emerald-900 px-2 py-0.5 rounded-md font-semibold border border-emerald-200 text-[11px]"
+                  >
+                    {displayText}
+                  </span>
+                );
+              })}
             </div>
           </div>
         )}

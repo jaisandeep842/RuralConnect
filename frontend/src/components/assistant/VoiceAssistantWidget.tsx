@@ -8,9 +8,10 @@ type VoiceState = 'ready' | 'listening' | 'processing' | 'speaking' | 'error';
 
 interface VoiceAssistantWidgetProps {
   onNewMessage?: (role: 'user' | 'assistant', text: string, sources?: string[], suggested?: string[]) => void;
+  sessionId?: string;
 }
 
-export const VoiceAssistantWidget: React.FC<VoiceAssistantWidgetProps> = ({ onNewMessage }) => {
+export const VoiceAssistantWidget: React.FC<VoiceAssistantWidgetProps> = ({ onNewMessage, sessionId }) => {
   const { t, i18n } = useTranslation();
   const [voiceState, setVoiceState] = useState<VoiceState>('ready');
   const [transcript, setTranscript] = useState('');
@@ -125,6 +126,7 @@ export const VoiceAssistantWidget: React.FC<VoiceAssistantWidgetProps> = ({ onNe
         body: JSON.stringify({
           message: queryText,
           language: i18n.language || 'en',
+          session_id: sessionId,
         }),
       });
 

@@ -168,7 +168,7 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   language?: string;
-  sources?: string[];
+  sources?: (string | Record<string, any>)[];
   suggested_questions?: string[];
   timestamp: string;
 }

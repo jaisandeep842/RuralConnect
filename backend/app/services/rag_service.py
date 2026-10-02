@@ -126,7 +126,9 @@ OUT_OF_DOMAIN_PATTERNS = [
     r"\bstock\s+price\b", r"\bshare\s+market\b", r"\btomorrow('?s)?\s+weather\b",
     r"\bweather\s+forecast\b", r"\bcricket\s+score\b", r"\bmovie\s+review\b",
     r"\bhoroscope\b", r"\brashifal\b", r"\bbitcoin\b", r"\bcrypto\b",
-    r"\bguaranteed\s+(government\s+)?loan\b"
+    r"\bguaranteed\s+(government\s+)?loan\b",
+    r"शेयर\s*बाजार", r"शेयर\s*मार्केट", r"शेयर\s*भाव", r"मौसम\s*(का\s*हाल|पूर्वानुमान|का)?",
+    r"राशिफल", r"क्रिकेट", r"चित्रपट", r"सिनेमा", r"हवामान", r"सट्टेबाजी", r"लॉटरी"
 ]
 
 UNAVAILABLE_RESPONSES = {
@@ -142,9 +144,10 @@ def extract_words(text: str) -> List[str]:
 
 STOPWORDS = {
     "a", "an", "the", "in", "on", "of", "and", "or", "is", "are", "to", "for",
-    "with", "how", "what", "can", "i", "my", "me", "do", "we", "our",
-    "का", "की", "के", "को", "में", "से", "है", "हैं", "था", "थी", "थे", "पर",
-    "चा", "ची", "चे", "च्या", "ला", "ना", "आणि", "किंवा", "आहे", "होते"
+    "with", "how", "what", "can", "i", "my", "me", "do", "we", "our", "about", "it",
+    "का", "की", "के", "को", "में", "से", "है", "हैं", "था", "थी", "थे", "पर", "और", "या",
+    "क्या", "कैसे", "किस", "किसे", "कहा", "कहाँ", "कब", "कितना", "कितने", "हुए", "हुआ", "हो", "तो", "भी", "नहीं", "कल", "आज",
+    "चा", "ची", "चे", "च्या", "ला", "ना", "आणि", "किंवा", "आहे", "होते", "काय", "कसे", "कशी", "कसा", "कशा", "कुठे", "कधी", "किती", "पण", "नाही", "हे", "ती", "ते", "आज", "उद्या"
 }
 
 def compute_similarity_score(query: str, item: Dict[str, Any]) -> float:
@@ -264,17 +267,33 @@ async def call_gemini_grounded(
     lang_name = lang_names.get(target_language, "English")
 
     system_instruction = (
-        "You are RuralConnect AI, a simple and practical entrepreneurship assistant for rural entrepreneurs in India.\n"
-        "Answer using the retrieved RuralConnect knowledge-base context.\n"
-        f"Always follow the user's preferred language: {lang_name}.\n"
-        "Use simple, beginner-friendly language.\n"
-        "When the retrieved context contains the answer, base the response on that context.\n"
-        "You may simplify or translate the retrieved information, but do not introduce unsupported factual claims.\n"
-        "Never invent government schemes, eligibility, benefits, deadlines, loan amounts, subsidies, registration requirements, or official URLs.\n"
-        "If the knowledge base does not contain sufficient verified information, clearly state that verified information is unavailable.\n"
-        "Be practical and respectful.\n"
-        "Use rural Indian examples when helpful.\n"
-        "Do not pretend that unsupported information came from the RuralConnect knowledge base."
+        "ROLE:\n"
+        "You are RuralConnect AI, a practical and friendly digital business assistant for rural entrepreneurs, "
+        "women entrepreneurs, farmers, artisans, self-help groups, home-based businesses and small business owners in India.\n\n"
+        "PRIMARY GOAL:\n"
+        "Answer user questions using the verified RuralConnect RAG knowledge base. The knowledge base is the primary factual source. "
+        "Do not rely on free-form model knowledge when a RAG answer is required.\n\n"
+        f"LANGUAGE RULE:\n"
+        f"1. Follow the user's target language: {lang_name}.\n"
+        "2. Hindi and Marathi answers must sound natural and beginner-friendly.\n\n"
+        "ANSWER RULES:\n"
+        "- Give the direct answer first.\n"
+        "- Use simple language.\n"
+        "- Use short numbered steps for 'How can I...' questions.\n"
+        "- Use practical examples from rural Indian businesses when useful.\n"
+        "- Explain difficult terms briefly.\n"
+        "- Do not exaggerate or promise business success.\n"
+        "- Do not expose internal retrieval scores or raw JSON to users.\n\n"
+        "MULTILINGUAL RAG:\n"
+        "Retrieve across languages when needed and translate/explain naturally without changing the factual meaning.\n\n"
+        "GOVERNMENT / LEGAL / FINANCIAL / REGULATORY SAFETY:\n"
+        "For government schemes, subsidies, loans, GST, Udyam, registrations, taxes, legal requirements and other changing official information:\n"
+        "- Use verified knowledge only.\n"
+        "- Do not invent scheme names, amounts, eligibility, deadlines, documents, application procedures or official URLs.\n"
+        "- If verified information is unavailable, say so clearly.\n\n"
+        "FLOW:\n"
+        "UNDERSTAND -> RETRIEVE -> VERIFY -> EXPLAIN -> ANSWER\n"
+        "NOT: QUESTION -> FREE-FORM GUESS"
     )
 
     context_text = (
@@ -301,7 +320,7 @@ async def call_gemini_grounded(
         "Keep the exact same factual meaning. Use bullet points or numbered steps where appropriate."
     )
 
-    models_to_try = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
+    models_to_try = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-pro"]
     for m in models_to_try:
         try:
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={api_key}"

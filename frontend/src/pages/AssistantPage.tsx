@@ -35,6 +35,7 @@ export const AssistantPage: React.FC = () => {
     },
   ]);
 
+  const [sessionId] = useState<string>(() => 'rc_sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9));
   const [inputText, setInputText] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
@@ -86,15 +87,16 @@ export const AssistantPage: React.FC = () => {
         body: JSON.stringify({
           message: text.trim(),
           language: i18n.language || 'en',
+          session_id: sessionId,
         }),
       });
 
       const assistantMsg: ChatMessageType = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: res.reply,
-        sources: res.sources,
-        suggested_questions: res.suggested_questions,
+        content: res.reply || res.answer || 'I am ready to assist you. Please ask your business question.',
+        sources: Array.isArray(res.sources) ? res.sources : [],
+        suggested_questions: Array.isArray(res.suggested_questions) ? res.suggested_questions : [],
         timestamp: new Date().toLocaleTimeString(),
       };
 
@@ -151,7 +153,7 @@ export const AssistantPage: React.FC = () => {
       </div>
 
       {/* Voice Assistant Interactive Widget */}
-      <VoiceAssistantWidget onNewMessage={handleVoiceWidgetMessage} />
+      <VoiceAssistantWidget onNewMessage={handleVoiceWidgetMessage} sessionId={sessionId} />
 
       {/* Suggested Quick Questions Pills */}
       {suggestedQuestions.length > 0 && (
