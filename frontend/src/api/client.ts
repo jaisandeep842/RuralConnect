@@ -9,7 +9,18 @@ import {
   getFallbackChatResponse,
 } from './fallbackData';
 
-const BASE_URL = import.meta.env.VITE_API_URL || '';
+const getBaseUrl = (): string => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
+    return envUrl.trim().replace(/\/+$/, '');
+  }
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return 'http://localhost:8000';
+  }
+  return 'https://ruralconnect-pv57.onrender.com';
+};
+
+const BASE_URL = getBaseUrl();
 
 export class ApiError extends Error {
   status: number;
