@@ -1,4 +1,5 @@
 import { Course, Lesson, Training, Scheme, CommunityPost, Mentor } from '../types';
+import { CORE_72_KNOWLEDGE_BASE, CoreKnowledgeItem } from './knowledge72Data';
 
 export const FALLBACK_COURSES: Course[] = [
   {
@@ -620,8 +621,106 @@ export const FALLBACK_POSTS: CommunityPost[] = [
   },
 ];
 
+const KNOWLEDGE_STOPWORDS = new Set([
+  'a', 'an', 'the', 'in', 'on', 'of', 'and', 'or', 'is', 'are', 'to', 'for',
+  'with', 'how', 'what', 'can', 'i', 'my', 'me', 'do', 'we', 'our', 'about', 'it',
+  'का', 'की', 'के', 'को', 'में', 'से', 'है', 'हैं', 'था', 'थी', 'थे', 'पर', 'और', 'या',
+  'क्या', 'कैसे', 'किस', 'किसे', 'कहा', 'कहाँ', 'कब', 'कितना', 'कितने', 'हुए', 'हुआ', 'हो', 'तो', 'भी', 'नहीं', 'कल', 'आज',
+  'चा', 'ची', 'चे', 'च्या', 'ला', 'ना', 'आणि', 'किंवा', 'आहे', 'होते', 'काय', 'कसे', 'कशी', 'कसा', 'कशा', 'कुठे', 'कधी', 'किती', 'पण', 'नाही', 'हे', 'ती', 'ते', 'आज', 'उद्या'
+]);
+
+function extractWords(text: string): string[] {
+  return text
+    .split(/[\s?,.!;:।'\"()[\]{}—\-_/\\]+/)
+    .map((w) => w.trim().toLowerCase())
+    .filter((w) => w.length > 0);
+}
+
+export function findBestKnowledgeMatch(query: string): { item: CoreKnowledgeItem; score: number } | null {
+  const qClean = query.trim().toLowerCase();
+  if (!qClean) return null;
+  const qWords = extractWords(qClean);
+  const meaningfulTokens = new Set(qWords.filter((w) => !KNOWLEDGE_STOPWORDS.has(w)));
+
+  let bestItem: CoreKnowledgeItem | null = null;
+  let maxScore = 0;
+
+  for (const item of CORE_72_KNOWLEDGE_BASE) {
+    let score = 0;
+    const titleLower = item.title.toLowerCase();
+    if (titleLower.includes(qClean) || qClean.includes(titleLower)) score += 5;
+
+    for (const qField of [item.question_en, item.question_hi, item.question_mr]) {
+      if (!qField) continue;
+      const qfLower = qField.toLowerCase();
+      if (qfLower.includes(qClean) || qClean.includes(qfLower)) score += 4.5;
+      const fw = new Set(extractWords(qfLower));
+      if (meaningfulTokens.size > 0) {
+        let common = 0;
+        meaningfulTokens.forEach((t) => { if (fw.has(t)) common++; });
+        if (common > 0) score += (common / meaningfulTokens.size) * 3.5;
+      }
+    }
+
+    for (const tag of item.tags || []) {
+      const tagLower = tag.toLowerCase();
+      if (qClean.includes(tagLower) || tagLower.includes(qClean)) score += 3.5;
+      const tw = new Set(extractWords(tagLower));
+      let tm = 0;
+      meaningfulTokens.forEach((t) => { if (tw.has(t)) tm++; });
+      if (tm > 0) score += 2.0;
+    }
+
+    if (qClean.includes(item.category.toLowerCase())) score += 2;
+
+    for (const aField of [item.answer_en, item.answer_hi, item.answer_mr]) {
+      if (!aField) continue;
+      const aw = new Set(extractWords(aField.toLowerCase()));
+      if (meaningfulTokens.size > 0) {
+        let matchA = 0;
+        meaningfulTokens.forEach((t) => { if (aw.has(t)) matchA++; });
+        if (matchA >= 2) score += 1.5;
+      }
+    }
+
+    if (score > maxScore) {
+      maxScore = score;
+      bestItem = item;
+    }
+  }
+
+  if (bestItem && maxScore >= 1.8) {
+    return { item: bestItem, score: maxScore };
+  }
+  return null;
+}
+
 export function getFallbackChatResponse(query: string, language: string = 'en'): { reply: string; sources: string[]; suggested_questions: string[] } {
   const q = query.toLowerCase().trim();
+
+  // 1. Check all 72 verified knowledge items first
+  const match = findBestKnowledgeMatch(query);
+  if (match) {
+    const item = match.item;
+    let replyText = item.answer_en;
+    if (language === 'mr' && item.answer_mr) {
+      replyText = item.answer_mr;
+    } else if (language === 'hi' && item.answer_hi) {
+      replyText = item.answer_hi;
+    }
+
+    const suggested = [
+      language === 'mr' ? 'व्हॉट्सअॅप बिझनेसवर उत्पादनांचा प्रसार कसा करावा?' : 'How can I promote my products on WhatsApp Business?',
+      language === 'mr' ? 'PMEGP योजनेतून महिलांना किती सबसिडी मिळते?' : 'What subsidy does PMEGP give to rural women?',
+      language === 'mr' ? 'माझ्या व्यवसायाचा निव्वळ नफा कसा काढावा?' : 'How can I calculate the profit of my business?'
+    ];
+
+    return {
+      reply: replyText,
+      sources: [item.title, item.source || 'RuralConnect Verified Knowledge Base'],
+      suggested_questions: suggested
+    };
+  }
 
   const isWhatsApp = q.includes('whatsapp') || q.includes('व्हॉट्सअॅप') || q.includes('व्हॉट्सॅप') || q.includes('व्हाट्सएप') || q.includes('catalog') || q.includes('कैटलॉग') || q.includes('कॅटलॉग') || q.includes('broadcast');
   const isFood = q.includes('food') || q.includes('खाद्य') || q.includes('लोणचे') || q.includes('पापड') || q.includes('मसाले') || q.includes('pickle') || q.includes('fssai') || q.includes('बेकरी') || q.includes('तेल');

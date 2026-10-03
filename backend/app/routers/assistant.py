@@ -1,4 +1,5 @@
 import uuid
+import logging
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, Depends
 from typing import List, Optional
@@ -6,6 +7,8 @@ from app.database import get_database
 from app.models.schemas import ChatQuery, ChatResponse
 from app.services.rag_service import generate_rag_answer
 from app.routers.deps import get_current_user_optional
+
+logger = logging.getLogger("ruralconnect.assistant")
 
 router = APIRouter(prefix="/api/assistant", tags=["AI Business Assistant"])
 
@@ -96,6 +99,8 @@ async def voice_chat(query: ChatQuery, current_user: Optional[dict] = Depends(ge
 @router.get("/history")
 async def get_chat_history(session_id: Optional[str] = None, current_user: Optional[dict] = Depends(get_current_user_optional)):
     db = get_database()
+    if db is None:
+        return []
     query = {}
     if current_user:
         query["user_id"] = current_user["_id"]
@@ -104,18 +109,22 @@ async def get_chat_history(session_id: Optional[str] = None, current_user: Optio
     else:
         return []
         
-    history = await db.chat_history.find(query).sort("created_at", 1).limit(50).to_list(50)
-    results = []
-    for h in history:
-        results.append({
-            "id": h["_id"],
-            "query": h.get("query") or h.get("user_message", ""),
-            "reply": h.get("reply") or h.get("assistant_response", ""),
-            "language": h.get("language", "en"),
-            "sources": h.get("sources", []),
-            "created_at": h.get("created_at", "")
-        })
-    return results
+    try:
+        history = await db.chat_history.find(query).sort("created_at", 1).limit(50).to_list(50)
+        results = []
+        for h in history:
+            results.append({
+                "id": h["_id"],
+                "query": h.get("query") or h.get("user_message", ""),
+                "reply": h.get("reply") or h.get("assistant_response", ""),
+                "language": h.get("language", "en"),
+                "sources": h.get("sources", []),
+                "created_at": h.get("created_at", "")
+            })
+        return results
+    except Exception as e:
+        logger.warning(f"Could not load chat history from database: {e}")
+        return []
 
 # Alias router for /api/ai/* routes
 ai_router = APIRouter(prefix="/api/ai", tags=["AI Voice & Chat Assistant (Alias)"])

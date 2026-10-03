@@ -210,7 +210,7 @@ function handleOfflineFallback<T>(endpoint: string, options: RequestInit = {}): 
   }
 
   // 5. AI Assistant
-  if (path === '/api/assistant/chat' && method === 'POST') {
+  if ((path === '/api/assistant/chat' || path === '/api/ai/chat' || path === '/api/assistant/voice' || path === '/api/ai/voice') && method === 'POST') {
     try {
       const body = JSON.parse((options.body as string) || '{}');
       const result = getFallbackChatResponse(body.message || '', body.language || 'en');
@@ -219,7 +219,7 @@ function handleOfflineFallback<T>(endpoint: string, options: RequestInit = {}): 
       return getFallbackChatResponse('', 'en') as unknown as T;
     }
   }
-  if (path === '/api/assistant/suggested') {
+  if (path === '/api/assistant/suggested' || path === '/api/ai/suggested') {
     const lang = params.get('language') || 'en';
     const questions = {
       mr: [
@@ -300,12 +300,36 @@ export async function apiRequest<T = any>(
         // Fallback for non-JSON errors
       }
 
+      // If server returned 5xx (e.g. 500, 502, 503, 504), gracefully activate verified fallback
+      if (response.status >= 500) {
+        console.warn(`[RuralConnect] Server returned ${response.status} for ${endpoint}, activating verified local data fallback.`);
+        try {
+          const fallback = handleOfflineFallback<T>(endpoint, options);
+          if (fallback !== undefined) {
+            return fallback;
+          }
+        } catch {
+          // ignore
+        }
+      }
+
       throw new ApiError(errorMessage, response.status);
     }
 
     return await response.json();
   } catch (error: any) {
     if (error instanceof ApiError) {
+      if (error.status >= 500) {
+        console.warn(`[RuralConnect] Server error ${error.status} for ${endpoint}, activating verified local data fallback.`);
+        try {
+          const fallback = handleOfflineFallback<T>(endpoint, options);
+          if (fallback !== undefined) {
+            return fallback;
+          }
+        } catch {
+          // ignore
+        }
+      }
       throw error;
     }
 

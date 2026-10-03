@@ -73,8 +73,9 @@ async def root():
 
 @app.get("/api/health")
 async def health_check():
+    db = get_database()
     return {
         "status": "healthy",
-        "database": "connected",
+        "database": "connected" if db is not None else "standalone/offline",
         "timestamp": "2026-03-01T12:00:00Z"
     }
