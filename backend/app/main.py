@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.database import connect_to_mongo, close_mongo_connection
+from app.database import connect_to_mongo, close_mongo_connection, get_database
 from app.seed_data import seed_database
 from app.routers import (
     auth, users, courses, mentors, training,
