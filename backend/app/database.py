@@ -12,7 +12,7 @@ db_instance = Database()
 
 async def connect_to_mongo():
     logger.info(f"Connecting to MongoDB at {settings.MONGODB_URI}...")
-    db_instance.client = AsyncIOMotorClient(settings.MONGODB_URI)
+    db_instance.client = AsyncIOMotorClient(settings.MONGODB_URI, serverSelectionTimeoutMS=4000)
     db_instance.db = db_instance.client[settings.MONGO_DB_NAME]
     
     # Create essential indexes

@@ -56,21 +56,24 @@ async def _process_query_internal(query: ChatQuery, current_user: Optional[dict]
     # Save to chat_history collection with all standard fields
     now_str = datetime.utcnow().isoformat()
     if db is not None:
-        await db.chat_history.insert_one({
-            "_id": str(uuid.uuid4()),
-            "session_id": session_id,
-            "conversation_id": session_id,
-            "user_id": user_id,
-            "user_message": query.message,
-            "assistant_response": answer,
-            "query": query.message,
-            "reply": answer,
-            "answer": answer,
-            "language": detected_lang,
-            "retrieved": is_retrieved,
-            "sources": sources,
-            "created_at": now_str
-        })
+        try:
+            await db.chat_history.insert_one({
+                "_id": str(uuid.uuid4()),
+                "session_id": session_id,
+                "conversation_id": session_id,
+                "user_id": user_id,
+                "user_message": query.message,
+                "assistant_response": answer,
+                "query": query.message,
+                "reply": answer,
+                "answer": answer,
+                "language": detected_lang,
+                "retrieved": is_retrieved,
+                "sources": sources,
+                "created_at": now_str
+            })
+        except Exception as e:
+            logger.warning(f"Could not persist chat history to database: {e}")
 
     return ChatResponse(
         reply=answer,
