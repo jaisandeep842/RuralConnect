@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   User, Mail, Phone, Lock, MapPin, Briefcase, Heart,
-  Sparkles, AlertCircle, ArrowRight
+  Sparkles, AlertCircle, ArrowRight, CheckCircle2, ShieldCheck, RefreshCw
 } from 'lucide-react';
 import { Button } from '../components/common/Button';
 import { apiRequest } from '../api/client';
@@ -56,6 +56,14 @@ export const RegisterPage: React.FC = () => {
     'Government Subsidies',
   ]);
 
+  // Phone OTP Verification State
+  const [phoneOtp, setPhoneOtp] = useState('');
+  const [phoneOtpSent, setPhoneOtpSent] = useState(false);
+  const [phoneVerified, setPhoneVerified] = useState(false);
+  const [verificationToken, setVerificationToken] = useState<string | null>(null);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpFeedback, setOtpFeedback] = useState<string | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -64,6 +72,65 @@ export const RegisterPage: React.FC = () => {
       setSelectedInterests(selectedInterests.filter((i) => i !== interest));
     } else {
       setSelectedInterests([...selectedInterests, interest]);
+    }
+  };
+
+  const handleSendPhoneOtp = async () => {
+    const cleanPhone = formData.phone.replace(/\D/g, '');
+    if (cleanPhone.length < 10) {
+      setErrorMessage('Please enter a valid 10-digit mobile number first.');
+      return;
+    }
+    setOtpLoading(true);
+    setErrorMessage(null);
+    setOtpFeedback(null);
+
+    try {
+      const res = await apiRequest('/api/auth/otp/request', {
+        method: 'POST',
+        body: JSON.stringify({
+          target: cleanPhone,
+          type: 'phone',
+          purpose: 'registration',
+        }),
+      });
+      setPhoneOtpSent(true);
+      setOtpFeedback(
+        res.dev_otp
+          ? `Code sent! (Test mode security code: ${res.dev_otp})`
+          : 'Security verification code sent to your phone.'
+      );
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Failed to send OTP to mobile number.');
+    } finally {
+      setOtpLoading(false);
+    }
+  };
+
+  const handleVerifyPhoneOtp = async () => {
+    if (!phoneOtp || phoneOtp.length < 6) {
+      setErrorMessage('Please enter the 6-digit code.');
+      return;
+    }
+    setOtpLoading(true);
+    setErrorMessage(null);
+
+    try {
+      const res = await apiRequest('/api/auth/otp/verify', {
+        method: 'POST',
+        body: JSON.stringify({
+          target: formData.phone.replace(/\D/g, ''),
+          otp: phoneOtp.trim(),
+          purpose: 'registration',
+        }),
+      });
+      setPhoneVerified(true);
+      setVerificationToken(res.verification_token);
+      setOtpFeedback('Mobile number verified successfully!');
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Invalid verification code.');
+    } finally {
+      setOtpLoading(false);
     }
   };
 
@@ -78,6 +145,7 @@ export const RegisterPage: React.FC = () => {
         body: JSON.stringify({
           ...formData,
           interests: selectedInterests,
+          verification_token: verificationToken || undefined,
         }),
       });
 
@@ -142,9 +210,26 @@ export const RegisterPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                  Phone Number / फोन नंबर *
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Phone Number / फोन नंबर *
+                  </label>
+                  {phoneVerified ? (
+                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                      <span>Verified</span>
+                    </span>
+                  ) : !phoneOtpSent ? (
+                    <button
+                      type="button"
+                      onClick={handleSendPhoneOtp}
+                      disabled={otpLoading || formData.phone.length < 10}
+                      className="text-xs font-bold text-brand-700 hover:underline disabled:opacity-50"
+                    >
+                      {otpLoading ? 'Sending...' : 'Verify with OTP'}
+                    </button>
+                  ) : null}
+                </div>
                 <div className="relative">
                   <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                   <input
@@ -152,10 +237,49 @@ export const RegisterPage: React.FC = () => {
                     required
                     placeholder="E.g., 9822334455"
                     value={formData.phone}
+                    disabled={phoneVerified}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 focus:outline-none"
+                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 focus:outline-none disabled:bg-slate-50"
                   />
                 </div>
+
+                {/* Inline OTP input when verification is requested */}
+                {phoneOtpSent && !phoneVerified && (
+                  <div className="mt-2 p-3 bg-amber-50/60 border border-amber-200 rounded-xl space-y-2 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-amber-900">Enter 6-Digit OTP</span>
+                      <button
+                        type="button"
+                        onClick={handleSendPhoneOtp}
+                        className="text-[11px] text-brand-700 font-semibold hover:underline"
+                      >
+                        Resend OTP
+                      </button>
+                    </div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        maxLength={6}
+                        placeholder="123456"
+                        value={phoneOtp}
+                        onChange={(e) => setPhoneOtp(e.target.value.replace(/\D/g, ''))}
+                        className="flex-1 px-3 py-1.5 rounded-lg border border-slate-300 text-sm font-bold tracking-widest bg-white"
+                      />
+                      <Button
+                        type="button"
+                        variant="primary"
+                        size="sm"
+                        isLoading={otpLoading}
+                        onClick={handleVerifyPhoneOtp}
+                      >
+                        Verify
+                      </Button>
+                    </div>
+                    {otpFeedback && (
+                      <p className="text-[11px] text-slate-600 font-medium">{otpFeedback}</p>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

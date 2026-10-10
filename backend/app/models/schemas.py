@@ -15,10 +15,33 @@ class UserRegister(BaseModel):
     business_type: str = "Agriculture"
     business_description: Optional[str] = ""
     interests: List[str] = []
+    verification_token: Optional[str] = None
 
 class UserLogin(BaseModel):
     email_or_phone: str
     password: str
+
+class OTPRequest(BaseModel):
+    target: str
+    type: str = "phone"  # "phone" or "email"
+    purpose: str = "login"  # "login", "registration", "reset_password"
+
+class OTPVerify(BaseModel):
+    target: str
+    otp: str
+    purpose: str = "login"
+
+class PasswordResetRequest(BaseModel):
+    target: str
+    verification_token: str
+    new_password: str
+
+class AdminBootstrapRequest(BaseModel):
+    bootstrap_key: str
+    email: str
+    password: str
+    full_name: Optional[str] = "Platform Administrator"
+    phone: Optional[str] = "9876543210"
 
 class UserProfileUpdate(BaseModel):
     full_name: Optional[str] = None
@@ -35,6 +58,10 @@ class UserProfileUpdate(BaseModel):
 class PasswordChange(BaseModel):
     old_password: str
     new_password: str
+
+class UserRoleUpdate(BaseModel):
+    role: str
+
 
 class UserResponse(BaseModel):
     id: str
@@ -57,6 +84,7 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserResponse
+
 
 # --- Mentors ---
 class MentorCreate(BaseModel):
@@ -196,19 +224,78 @@ class ProgressUpdate(BaseModel):
 
 # --- Knowledge Base & RAG ---
 class KnowledgeItemCreate(BaseModel):
-    topic: str
-    category: str
+    title: Optional[str] = None
+    topic: Optional[str] = None
+    category: str = "Entrepreneurship"
     question: str
+    question_en: Optional[str] = None
+    question_hi: Optional[str] = None
+    question_mr: Optional[str] = None
     answer: str
+    answer_en: Optional[str] = None
+    answer_hi: Optional[str] = None
+    answer_mr: Optional[str] = None
     language: str = "en"
     tags: List[str] = []
     source: str = "Verified Government/Academic Source"
+    source_url: Optional[str] = ""
     is_verified: bool = True
+    status: str = "published"  # "draft" or "published"
 
-class KnowledgeItemResponse(KnowledgeItemCreate):
+class KnowledgeItemUpdate(BaseModel):
+    title: Optional[str] = None
+    topic: Optional[str] = None
+    category: Optional[str] = None
+    question: Optional[str] = None
+    question_en: Optional[str] = None
+    question_hi: Optional[str] = None
+    question_mr: Optional[str] = None
+    answer: Optional[str] = None
+    answer_en: Optional[str] = None
+    answer_hi: Optional[str] = None
+    answer_mr: Optional[str] = None
+    language: Optional[str] = None
+    tags: Optional[List[str]] = None
+    source: Optional[str] = None
+    source_url: Optional[str] = None
+    is_verified: Optional[bool] = None
+    status: Optional[str] = None
+
+class KnowledgeItemResponse(BaseModel):
     id: str
+    title: str = ""
+    topic: str = ""
+    category: str = "Entrepreneurship"
+    question: str = ""
+    question_en: str = ""
+    question_hi: Optional[str] = ""
+    question_mr: Optional[str] = ""
+    answer: str = ""
+    answer_en: str = ""
+    answer_hi: Optional[str] = ""
+    answer_mr: Optional[str] = ""
+    language: str = "en"
+    tags: List[str] = []
+    source: str = ""
+    source_url: Optional[str] = ""
+    is_verified: bool = True
+    status: str = "published"
+    embedding_status: str = "indexed"
+    embedding_error: Optional[str] = None
+    created_by: Optional[str] = "admin"
+    created_at: Optional[str] = None
+    updated_at: Optional[str] = None
+    version: int = 1
+
+class KnowledgeListResponse(BaseModel):
+    items: List[KnowledgeItemResponse]
+    total: int
+    page: int = 1
+    limit: int = 20
+    total_pages: int = 1
 
 class ChatQuery(BaseModel):
+
     message: str
     language: Optional[str] = "en"  # "en", "hi", "mr"
     session_id: Optional[str] = None
@@ -287,3 +374,4 @@ class AdminStatsResponse(BaseModel):
     total_schemes: int
     total_certificates: int
     total_posts: int
+    total_knowledge_items: int = 72

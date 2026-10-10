@@ -32,7 +32,7 @@ export const AdminDashboardPage: React.FC = () => {
     { title: 'Courses & Lessons', desc: 'Curate video courses & embedded lectures', icon: BookOpen, path: '/admin/courses', count: stats?.total_courses || 0, color: 'text-brand-700 bg-brand-50' },
     { title: 'YouTube Lectures', desc: 'Manage video URLs, descriptions, order', icon: Video, path: '/admin/lessons', count: stats?.total_lessons || 0, color: 'text-red-600 bg-red-50' },
     { title: 'Government Schemes', desc: 'Add verified schemes, edit benefits', icon: ShieldCheck, path: '/admin/schemes', count: stats?.total_schemes || 0, color: 'text-amber-700 bg-amber-50' },
-    { title: 'AI Knowledge Base', desc: 'Manage verified entries for RAG engine', icon: Database, path: '/admin/knowledge-base', count: 5, color: 'text-purple-600 bg-purple-50' },
+    { title: 'AI Knowledge Base', desc: 'Manage verified entries for RAG engine', icon: Database, path: '/admin/knowledge-base', count: stats?.total_knowledge_items ?? 72, color: 'text-purple-600 bg-purple-50' },
     { title: 'Broadcast Notifications', desc: 'Send announcements to all entrepreneurs', icon: Bell, path: '/admin/notifications', count: 'Active', color: 'text-teal-600 bg-teal-50' },
   ];
 

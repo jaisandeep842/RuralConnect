@@ -8,14 +8,19 @@ import {
   FALLBACK_MENTORS,
   getFallbackChatResponse,
 } from './fallbackData';
+import { CORE_72_KNOWLEDGE_BASE } from './knowledge72Data';
 
 const getBaseUrl = (): string => {
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    const envUrl = import.meta.env.VITE_API_URL;
+    if (envUrl && typeof envUrl === 'string' && envUrl.includes('localhost')) {
+      return envUrl.trim().replace(/\/+$/, '');
+    }
+    return 'http://localhost:8000';
+  }
   const envUrl = import.meta.env.VITE_API_URL;
   if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
     return envUrl.trim().replace(/\/+$/, '');
-  }
-  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    return 'http://localhost:8000';
   }
   return 'https://ruralconnect-pv57.onrender.com';
 };
@@ -244,7 +249,103 @@ function handleOfflineFallback<T>(endpoint: string, options: RequestInit = {}): 
     return { questions: (questions as any)[lang] || questions.en } as unknown as T;
   }
 
-  // 6. Generic health or fallback
+  // 6. Auth & OTP Fallback
+  if (path === '/api/auth/otp/request' && method === 'POST') {
+    try {
+      const body = JSON.parse((options.body as string) || '{}');
+      return {
+        success: true,
+        message: `Verification code sent to your ${body.type || 'phone'}.`,
+        target: body.target,
+        dev_otp: '123456',
+        expires_in_minutes: 10
+      } as unknown as T;
+    } catch {
+      return { success: true, message: 'OTP sent.', dev_otp: '123456' } as unknown as T;
+    }
+  }
+
+  if (path === '/api/auth/otp/verify' && method === 'POST') {
+    try {
+      const body = JSON.parse((options.body as string) || '{}');
+      if (body.purpose === 'login') {
+        const demoUser = {
+          id: 'user-demo-01',
+          full_name: 'Sunita Kamble',
+          email: 'sunita@ruralconnect.in',
+          phone: body.target || '9822334455',
+          role: 'entrepreneur',
+          preferred_language: 'mr',
+          village: 'Shindewadi',
+          district: 'Satara',
+          state: 'Maharashtra',
+          business_type: 'Food',
+          business_description: 'Organic spice processing & homemade pickles.',
+          interests: ['Food Processing', 'Government Subsidies'],
+          profile_photo: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80',
+          profile_completion: 100,
+          created_at: new Date().toISOString()
+        };
+        return {
+          access_token: 'demo-jwt-token-verified-phone',
+          token_type: 'bearer',
+          user: demoUser
+        } as unknown as T;
+      }
+      return {
+        success: true,
+        verified: true,
+        target: body.target,
+        verification_token: 'verified-token-' + Date.now(),
+        message: 'Security verification successful.'
+      } as unknown as T;
+    } catch {
+      return { success: true, verified: true } as unknown as T;
+    }
+  }
+
+  if (path === '/api/auth/reset-password' && method === 'POST') {
+    return {
+      success: true,
+      message: 'Your password has been reset successfully. Please log in with your new password.'
+    } as unknown as T;
+  }
+
+  // 7. Admin Knowledge Base Fallback
+  if (path === '/api/admin/knowledge-base' && method === 'GET') {
+    const formatted = CORE_72_KNOWLEDGE_BASE.map((k) => ({
+      id: k.id,
+      title: k.title,
+      topic: k.title,
+      category: k.category,
+      question: k.question_en,
+      question_en: k.question_en,
+      question_hi: k.question_hi,
+      question_mr: k.question_mr,
+      answer: k.answer_en,
+      answer_en: k.answer_en,
+      answer_hi: k.answer_hi,
+      answer_mr: k.answer_mr,
+      language: 'en',
+      tags: k.tags || [],
+      source: k.source || 'Verified Source',
+      source_url: '',
+      is_verified: true,
+      status: 'published',
+      embedding_status: 'indexed',
+      created_at: k.updated_at || '2026-03-01T00:00:00Z',
+      updated_at: k.updated_at || '2026-03-01T00:00:00Z',
+      version: 1
+    }));
+    return {
+      items: formatted,
+      total: formatted.length,
+      page: 1,
+      limit: 100
+    } as unknown as T;
+  }
+
+  // 8. Generic health or fallback
   if (path === '/api/health') {
     return { status: 'healthy', database: 'connected (fallback)' } as unknown as T;
   }

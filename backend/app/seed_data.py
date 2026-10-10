@@ -1,8 +1,11 @@
 import asyncio
 import logging
 from datetime import datetime
+from app.config import settings
 from app.database import get_database, connect_to_mongo, close_mongo_connection
 from app.services.auth_service import get_password_hash
+from app.knowledge_data import CORE_72_KNOWLEDGE_BASE
+from app.services.rag_service import load_knowledge_pool_from_db
 
 logger = logging.getLogger("ruralconnect.seed")
 
@@ -759,6 +762,33 @@ async def seed_database():
             }},
             upsert=True
         )
+
+    # 7. Knowledge Base (Ensure all 72 verified Q&A entries are preserved, published, and indexed)
+    logger.info("Verifying RuralConnect 72 Core Knowledge Base entries in MongoDB...")
+    for item in CORE_72_KNOWLEDGE_BASE:
+        existing_kb = await db.knowledge_base.find_one({"$or": [{"_id": item["id"]}, {"id": item["id"]}]})
+        if not existing_kb:
+            kb_doc = dict(item)
+            kb_doc["_id"] = item["id"]
+            kb_doc["status"] = "published"
+            kb_doc["is_verified"] = True
+            kb_doc["embedding_status"] = "indexed"
+            kb_doc["created_at"] = now_str
+            kb_doc["updated_at"] = item.get("updated_at", now_str)
+            await db.knowledge_base.insert_one(kb_doc)
+        else:
+            updates = {}
+            if "status" not in existing_kb:
+                updates["status"] = "published"
+            if "is_verified" not in existing_kb:
+                updates["is_verified"] = True
+            if "embedding_status" not in existing_kb:
+                updates["embedding_status"] = "indexed"
+            if updates:
+                await db.knowledge_base.update_one({"_id": existing_kb["_id"]}, {"$set": updates})
+
+    # Synchronize active live in-memory retrieval pool
+    await load_knowledge_pool_from_db(db)
 
     logger.info("Seed data verification completed successfully.")
 

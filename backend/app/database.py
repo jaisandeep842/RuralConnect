@@ -23,6 +23,10 @@ async def connect_to_mongo():
         try:
             await db_instance.db.users.create_index("email", unique=True)
             await db_instance.db.users.create_index("phone")
+            await db_instance.db.otps.create_index([("target", 1), ("purpose", 1)])
+            await db_instance.db.otps.create_index("created_at")
+            await db_instance.db.knowledge_base.create_index([("status", 1), ("is_verified", 1)])
+            await db_instance.db.knowledge_base.create_index([("category", 1), ("language", 1)])
             await db_instance.db.lessons.create_index([("course_id", 1), ("lesson_number", 1)])
             await db_instance.db.learning_progress.create_index([("user_id", 1), ("course_id", 1), ("lesson_id", 1)], unique=True)
             await db_instance.db.training_registrations.create_index([("user_id", 1), ("training_id", 1)], unique=True)
