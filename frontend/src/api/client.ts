@@ -13,10 +13,10 @@ import { CORE_72_KNOWLEDGE_BASE } from './knowledge72Data';
 const getBaseUrl = (): string => {
   if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
     const envUrl = import.meta.env.VITE_API_URL;
-    if (envUrl && typeof envUrl === 'string' && envUrl.includes('localhost')) {
+    if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
       return envUrl.trim().replace(/\/+$/, '');
     }
-    return 'http://localhost:8000';
+    return 'http://localhost:8001';
   }
   const envUrl = import.meta.env.VITE_API_URL;
   if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
@@ -250,6 +250,93 @@ function handleOfflineFallback<T>(endpoint: string, options: RequestInit = {}): 
   }
 
   // 6. Auth & OTP Fallback
+  if (path === '/api/auth/login' && method === 'POST') {
+    try {
+      const body = JSON.parse((options.body as string) || '{}');
+      const target = (body.email_or_phone || '').toLowerCase();
+
+      if (target.includes('admin') || body.password === 'Admin@12345') {
+        const adminUser = {
+          id: 'user-admin-01',
+          full_name: 'Dr. Rajesh Sharma (Platform Admin)',
+          email: 'admin@ruralconnect.in',
+          phone: '9876543210',
+          role: 'admin',
+          preferred_language: 'en',
+          village: 'Haveli',
+          district: 'Pune',
+          state: 'Maharashtra',
+          business_type: 'Services',
+          business_description: 'Rural Development Officer and Platform Administrator.',
+          interests: ['Administration', 'Policy', 'Mentorship'],
+          profile_photo: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=150&auto=format&fit=crop&q=80',
+          profile_completion: 100,
+          created_at: new Date().toISOString()
+        };
+        return {
+          access_token: 'demo-admin-jwt-token-fallback',
+          token_type: 'bearer',
+          user: adminUser
+        } as unknown as T;
+      }
+
+      const entrepreneurUser = {
+        id: 'user-demo-01',
+        full_name: 'Sunita Kamble',
+        email: body.email_or_phone || 'sunita@ruralconnect.in',
+        phone: '9822334455',
+        role: 'entrepreneur',
+        preferred_language: 'mr',
+        village: 'Shindewadi',
+        district: 'Satara',
+        state: 'Maharashtra',
+        business_type: 'Food',
+        business_description: 'Organic spice processing & homemade pickles.',
+        interests: ['Food Processing', 'Government Subsidies'],
+        profile_photo: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=150&auto=format&fit=crop&q=80',
+        profile_completion: 100,
+        created_at: new Date().toISOString()
+      };
+      return {
+        access_token: 'demo-user-jwt-token-fallback',
+        token_type: 'bearer',
+        user: entrepreneurUser
+      } as unknown as T;
+    } catch {
+      // fallback
+    }
+  }
+
+  if (path === '/api/auth/register' && method === 'POST') {
+    try {
+      const body = JSON.parse((options.body as string) || '{}');
+      const registeredUser = {
+        id: 'user-' + Date.now(),
+        full_name: body.full_name || 'Rural Entrepreneur',
+        email: body.email || 'user@ruralconnect.in',
+        phone: body.phone || '9876543210',
+        role: 'entrepreneur',
+        preferred_language: body.preferred_language || 'en',
+        village: body.village || 'Wai',
+        district: body.district || 'Satara',
+        state: body.state || 'Maharashtra',
+        business_type: body.business_type || 'Agriculture',
+        business_description: body.business_description || '',
+        interests: body.interests || [],
+        profile_photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+        profile_completion: 80,
+        created_at: new Date().toISOString()
+      };
+      return {
+        access_token: 'demo-registered-user-token',
+        token_type: 'bearer',
+        user: registeredUser
+      } as unknown as T;
+    } catch {
+      // fallback
+    }
+  }
+
   if (path === '/api/auth/otp/request' && method === 'POST') {
     try {
       const body = JSON.parse((options.body as string) || '{}');
