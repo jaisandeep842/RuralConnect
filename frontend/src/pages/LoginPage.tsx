@@ -72,7 +72,8 @@ export const LoginPage: React.FC = () => {
       });
 
       setAuth(response.user, response.access_token);
-      navigate(from, { replace: true });
+      const targetPath = response.user.role === 'admin' ? '/admin' : (from !== '/login' ? from : '/dashboard');
+      navigate(targetPath, { replace: true });
     } catch (err: any) {
       setErrorMessage(err.message || 'Invalid email/phone or password. Please try again.');
     } finally {
@@ -137,7 +138,8 @@ export const LoginPage: React.FC = () => {
       });
 
       setAuth(response.user, response.access_token);
-      navigate(from, { replace: true });
+      const targetPath = response.user.role === 'admin' ? '/admin' : (from !== '/login' ? from : '/dashboard');
+      navigate(targetPath, { replace: true });
     } catch (err: any) {
       setErrorMessage(err.message || 'Invalid or expired OTP. Please try again.');
     } finally {
@@ -145,12 +147,31 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  // Quick Demo Account Helper
-  const handleQuickLogin = (email: string, pass: string) => {
+  // Quick Demo Account Helper (Instant 1-Click Login)
+  const handleQuickLogin = async (email: string, pass: string) => {
     setActiveTab('password');
     setEmailOrPhone(email);
     setPassword(pass);
     setErrorMessage(null);
+    setIsLoading(true);
+
+    try {
+      const response = await apiRequest('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          email_or_phone: email,
+          password: pass,
+        }),
+      });
+
+      setAuth(response.user, response.access_token);
+      const targetPath = response.user.role === 'admin' ? '/admin' : '/dashboard';
+      navigate(targetPath, { replace: true });
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Forgot Password: Step 1 Request Code
